@@ -10,9 +10,9 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import de.ustu.ims.segmentation.type.SegmentBoundary;
+import de.ustu.ims.segmentation.type.SegmentationUnit;
 
-public class SegmentBoundaryAnnotator extends JCasAnnotator_ImplBase {
+public class SegmentationUnitAnnotator extends JCasAnnotator_ImplBase {
 
 	public static final String PARAM_ANNOTATION_TYPE = "Annotation Type";
 
@@ -26,8 +26,9 @@ public class SegmentBoundaryAnnotator extends JCasAnnotator_ImplBase {
 			throws ResourceInitializationException {
 		super.initialize(context);
 		try {
-			Class<?> clazz = Class.forName(annotationTypeName);
-			annotationType = (Class<? extends Annotation>) clazz;
+			annotationType =
+					(Class<? extends Annotation>) Class
+							.forName(annotationTypeName);
 		} catch (ClassNotFoundException e) {
 			throw new ResourceInitializationException(e);
 		}
@@ -35,11 +36,9 @@ public class SegmentBoundaryAnnotator extends JCasAnnotator_ImplBase {
 
 	@Override
 	public void process(JCas jcas) throws AnalysisEngineProcessException {
-
 		for (Annotation anno : JCasUtil.select(jcas, annotationType)) {
-			int b = anno.getBegin();
-			AnnotationFactory.createAnnotation(jcas, b, b,
-					SegmentBoundary.class);
+			AnnotationFactory.createAnnotation(jcas, anno.getBegin(),
+					anno.getEnd(), SegmentationUnit.class);
 		}
 	}
 

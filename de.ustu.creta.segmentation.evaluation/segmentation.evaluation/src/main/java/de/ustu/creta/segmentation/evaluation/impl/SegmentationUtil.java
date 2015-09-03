@@ -5,11 +5,16 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
+import org.apache.uima.resource.ResourceInitializationException;
 
 import de.ustu.creta.segmentation.evaluation.util.Counter;
+import de.ustu.creta.segmentation.evaluation.util.SegmentBoundaryAnnotator;
 import de.ustu.ims.segmentation.type.SegmentationUnit;
 
 public class SegmentationUtil {
@@ -103,6 +108,18 @@ public class SegmentationUtil {
 			s += array[i];
 		}
 		return s;
+	}
+
+	public static JCas segment2boundary(JCas jcas,
+			Class<? extends Annotation> segmentClass)
+					throws AnalysisEngineProcessException,
+					ResourceInitializationException {
+		SimplePipeline.runPipeline(jcas, AnalysisEngineFactory
+				.createEngineDescription(SegmentBoundaryAnnotator.class,
+						SegmentBoundaryAnnotator.PARAM_ANNOTATION_TYPE,
+						segmentClass.getCanonicalName()));
+		return jcas;
+
 	}
 
 }
