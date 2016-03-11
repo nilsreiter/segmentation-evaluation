@@ -1,0 +1,10 @@
+.project
+.settings/
+de.unistuttgart.creta.segmentation.api/.classpath
+de.unistuttgart.creta.segmentation.api/.gitignore
+de.unistuttgart.creta.segmentation.api/.project
+de.unistuttgart.creta.segmentation.api/.settings/
+de.unistuttgart.creta.segmentation.evaluation/.classpath
+de.unistuttgart.creta.segmentation.evaluation/.gitignore
+de.unistuttgart.creta.segmentation.evaluation/.project
+de.unistuttgart.creta.segmentation.evaluation/.settings/
