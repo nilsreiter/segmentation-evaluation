@@ -56,7 +56,7 @@
   </dependencies>
   
   <parent>
-  	<groupId>de.unistuttgart.creta</groupId>
+  	<groupId>de.unistuttgart.ims</groupId>
   	<artifactId>segmentation</artifactId>
   	<version>0.1</version>
   </parent>
