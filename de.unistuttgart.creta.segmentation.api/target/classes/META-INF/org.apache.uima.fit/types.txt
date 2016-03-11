@@ -1,1 +1,0 @@
-classpath*:de/ustu/ims/segmentation/api/Segmentation.xml
