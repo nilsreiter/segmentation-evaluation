@@ -5,7 +5,6 @@
   <packaging>jar</packaging>
 
   <name>segmentation.api</name>
-  <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,9 +17,6 @@
     </dependency>
   </dependencies>
   <scm>
-	<connection>scm:git:git@bitbucket.org:7548950/java.git</connection>
-	<developerConnection>scm:git:git@bitbucket.org:7548950/java.git</developerConnection>
-  	<url>https://git@bitbucket.org:7548950/java.git</url>
     <tag>HEAD</tag>
   </scm>
   <parent>
