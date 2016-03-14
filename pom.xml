@@ -130,9 +130,9 @@
 			</plugin>
 		</plugins>
 	</build>
-	<modules>
-		<module>de.unistuttgart.creta.segmentation.evaluation</module>
-		<module>de.unistuttgart.creta.segmentation.api</module>
-	</modules>
 	<description>Java code for evaluating text segmentation. Java rewrite of https://github.com/cfournie/segmentation.evaluation.</description>
+	<modules>
+		<module>de.unistuttgart.ims.segmentation.api</module>
+		<module>de.unistuttgart.ims.segmentation.evaluation</module>
+	</modules>
 </project>
