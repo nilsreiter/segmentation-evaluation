@@ -30,11 +30,6 @@
   	<version>20140107</version>
   </dependency>
   	  <dependency>
-  	  	<groupId>de.ustu.ims</groupId>
-  	  	<artifactId>segmentation.api</artifactId>
-  	  	<version>1.0</version>
-  	  </dependency>
-  	  <dependency>
   	  	<groupId>org.apache.uima</groupId>
   	  	<artifactId>uimafit-core</artifactId>
   	  </dependency>
@@ -52,6 +47,11 @@
   	  	<groupId>org.slf4j</groupId>
   	  	<artifactId>slf4j-api</artifactId>
   	  	<version>1.7.12</version>
+  	  </dependency>
+  	  <dependency>
+  	  	<groupId>de.unistuttgart.ims</groupId>
+  	  	<artifactId>segmentation.api</artifactId>
+  	  	<version>${project.version}</version>
   	  </dependency>
   </dependencies>
   
