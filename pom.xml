@@ -5,9 +5,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 >
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.unistuttgart.creta</groupId>
+	<groupId>de.unistuttgart.ims</groupId>
 	<artifactId>segmentation</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<packaging>pom</packaging>
 	<name>Segmentation Evaluation</name>
 	<url>https://github.com/nilsreiter/segmentation-evaluation</url>
@@ -130,8 +130,9 @@
 			</plugin>
 		</plugins>
 	</build>
+	<description>Java code for evaluating text segmentation. Java rewrite of https://github.com/cfournie/segmentation.evaluation.</description>
 	<modules>
-		<module>de.unistuttgart.creta.segmentation.evaluation</module>
-		<module>de.unistuttgart.creta.segmentation.api</module>
+		<module>de.unistuttgart.ims.segmentation.api</module>
+		<module>de.unistuttgart.ims.segmentation.evaluation</module>
 	</modules>
 </project>
