@@ -10,7 +10,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import de.ustu.ims.segmentation.type.SegmentationUnit;
+import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 
 public class SegmentationUnitAnnotator extends JCasAnnotator_ImplBase {
 
@@ -22,23 +22,19 @@ public class SegmentationUnitAnnotator extends JCasAnnotator_ImplBase {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void initialize(final UimaContext context)
-			throws ResourceInitializationException {
+	public void initialize(final UimaContext context) throws ResourceInitializationException {
 		super.initialize(context);
 		try {
-			annotationType =
-					(Class<? extends Annotation>) Class
-							.forName(annotationTypeName);
-		} catch (ClassNotFoundException e) {
+			annotationType = (Class<? extends Annotation>) Class.forName(annotationTypeName);
+		} catch (final ClassNotFoundException e) {
 			throw new ResourceInitializationException(e);
 		}
 	}
 
 	@Override
 	public void process(JCas jcas) throws AnalysisEngineProcessException {
-		for (Annotation anno : JCasUtil.select(jcas, annotationType)) {
-			AnnotationFactory.createAnnotation(jcas, anno.getBegin(),
-					anno.getEnd(), SegmentationUnit.class);
+		for (final Annotation anno : JCasUtil.select(jcas, annotationType)) {
+			AnnotationFactory.createAnnotation(jcas, anno.getBegin(), anno.getEnd(), SegmentationUnit.class);
 		}
 	}
 

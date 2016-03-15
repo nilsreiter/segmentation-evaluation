@@ -8,11 +8,11 @@ import org.apache.uima.jcas.JCas;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.unistuttgart.ims.segmentation.type.SegmentBoundary;
+import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 import de.ustu.creta.segmentation.evaluation.FournierMetric.Transposition;
 import de.ustu.creta.segmentation.evaluation.FournierMetric.TranspositionWeightingFunction;
 import de.ustu.creta.segmentation.evaluation.impl.BoundarySimilarity_impl;
-import de.ustu.ims.segmentation.type.SegmentBoundary;
-import de.ustu.ims.segmentation.type.SegmentationUnit;
 
 public class TestBoundarySimilarityVerified {
 	JCas gold, silv;
@@ -35,9 +35,7 @@ public class TestBoundarySimilarityVerified {
 			createAnnotation(silv, i, i + 1, SegmentationUnit.class);
 		}
 
-		bd =
-				(BoundarySimilarity_impl) MetricFactory.getMetric(
-						BoundarySimilarity.class, SegmentBoundary.class);
+		bd = (BoundarySimilarity_impl) MetricFactory.getMetric(BoundarySimilarity.class, SegmentBoundary.class);
 	}
 
 	/**
@@ -82,7 +80,7 @@ public class TestBoundarySimilarityVerified {
 	@Test
 	public void test4() {
 		for (int i = 0; i < text.length(); i++) {
-			if (i % 2 == 0)
+			if ((i % 2) == 0)
 				createAnnotation(gold, i, i, SegmentBoundary.class);
 			else
 				createAnnotation(silv, i, i, SegmentBoundary.class);
@@ -93,7 +91,7 @@ public class TestBoundarySimilarityVerified {
 
 	/**
 	 * <pre>
-	 * >>> 
+	 * >>>
 	 * </pre>
 	 */
 	@Test

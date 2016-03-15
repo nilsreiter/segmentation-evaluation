@@ -13,43 +13,39 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 
+import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 import de.ustu.creta.segmentation.evaluation.util.Counter;
 import de.ustu.creta.segmentation.evaluation.util.SegmentBoundaryAnnotator;
-import de.ustu.ims.segmentation.type.SegmentationUnit;
 
 public class SegmentationUtil {
 
-	public static int[] getMassTuple(JCas jcas,
-			Class<? extends Annotation> boundaryType) {
-		Collection<? extends Annotation> boundaries =
-				JCasUtil.select(jcas, boundaryType);
-		Counter<Annotation> segUnits = new Counter<Annotation>();
-		for (Annotation su : JCasUtil.select(jcas, SegmentationUnit.class)) {
+	public static int[] getMassTuple(JCas jcas, Class<? extends Annotation> boundaryType) {
+		final Collection<? extends Annotation> boundaries = JCasUtil.select(jcas, boundaryType);
+		final Counter<Annotation> segUnits = new Counter<Annotation>();
+		for (final Annotation su : JCasUtil.select(jcas, SegmentationUnit.class)) {
 			segUnits.add(su);
 		}
 
-		int units = segUnits.size();
+		final int units = segUnits.size();
 		// int[] masses = new int[boundaries.size() + 1];
-		List<Integer> massList = new LinkedList<Integer>();
-		int i = 0, end = jcas.getDocumentText().length();
+		final List<Integer> massList = new LinkedList<Integer>();
+		int i = 0;
+		final int end = jcas.getDocumentText().length();
 		Annotation prevAnno = null;
 		Collection<? extends Annotation> coll;
 
-		for (Annotation anno : boundaries) {
+		for (final Annotation anno : boundaries) {
 			if (prevAnno == null) {
 				// Case before the first segment
-				coll =
-						JCasUtil.selectPreceding(SegmentationUnit.class, anno,
-								Integer.MAX_VALUE);
+				coll = JCasUtil.selectPreceding(SegmentationUnit.class, anno, Integer.MAX_VALUE);
 			} else {
 				// cases between the first and last segment boundary
-				coll =
-						JCasUtil.selectBetween(SegmentationUnit.class,
-								prevAnno, anno);
+				coll = JCasUtil.selectBetween(SegmentationUnit.class, prevAnno, anno);
 			}
 
 			// System.err.println(JCasUtil.toText(coll));
-			if (!coll.isEmpty()) massList.add(coll.size());
+			if (!coll.isEmpty())
+				massList.add(coll.size());
 			// masses[i++] = coll.size();
 			segUnits.subtractAll(coll);
 			prevAnno = anno;
@@ -59,13 +55,12 @@ public class SegmentationUtil {
 		if (prevAnno == null) {
 			coll = JCasUtil.select(jcas, SegmentationUnit.class);
 		} else
-			coll =
-					JCasUtil.selectBetween(SegmentationUnit.class, prevAnno,
-							new Annotation(jcas, end + 1, end + 1));
+			coll = JCasUtil.selectBetween(SegmentationUnit.class, prevAnno, new Annotation(jcas, end + 1, end + 1));
 		if (coll != null) {
 			// System.err.println(i + ": " + coll.toString());
 			// masses[i] = coll.size();
-			if (!coll.isEmpty()) massList.add(coll.size());
+			if (!coll.isEmpty())
+				massList.add(coll.size());
 
 			// System.err.println(JCasUtil.toText(coll));
 			segUnits.subtractAll(coll);
@@ -83,7 +78,7 @@ public class SegmentationUtil {
 			System.err.println(JCasUtil.toText(segUnits.getKeysWithMaxCount()));
 		}
 
-		int[] masses = new int[massList.size()];
+		final int[] masses = new int[massList.size()];
 		for (i = 0; i < massList.size(); i++) {
 			masses[i] = massList.get(i);
 		}
@@ -92,32 +87,29 @@ public class SegmentationUtil {
 	}
 
 	public static boolean[] getBoundaryString(int[] massString) {
-		boolean[] boundaries = new boolean[sum(massString)];
+		final boolean[] boundaries = new boolean[sum(massString)];
 		Arrays.fill(boundaries, false);
 		int index = 0;
-		for (int i = 0; i < massString.length - 1; i++) {
+		for (int i = 0; i < (massString.length - 1); i++) {
 			index += massString[i];
-			if (index < boundaries.length) boundaries[index - 1] = true;
+			if (index < boundaries.length)
+				boundaries[index - 1] = true;
 		}
 		return boundaries;
 	}
 
 	public static int sum(int[] array) {
 		int s = 0;
-		for (int i = 0; i < array.length; i++) {
-			s += array[i];
+		for (final int element : array) {
+			s += element;
 		}
 		return s;
 	}
 
-	public static JCas segment2boundary(JCas jcas,
-			Class<? extends Annotation> segmentClass)
-					throws AnalysisEngineProcessException,
-					ResourceInitializationException {
-		SimplePipeline.runPipeline(jcas, AnalysisEngineFactory
-				.createEngineDescription(SegmentBoundaryAnnotator.class,
-						SegmentBoundaryAnnotator.PARAM_ANNOTATION_TYPE,
-						segmentClass.getCanonicalName()));
+	public static JCas segment2boundary(JCas jcas, Class<? extends Annotation> segmentClass)
+			throws AnalysisEngineProcessException, ResourceInitializationException {
+		SimplePipeline.runPipeline(jcas, AnalysisEngineFactory.createEngineDescription(SegmentBoundaryAnnotator.class,
+				SegmentBoundaryAnnotator.PARAM_ANNOTATION_TYPE, segmentClass.getCanonicalName()));
 		return jcas;
 
 	}

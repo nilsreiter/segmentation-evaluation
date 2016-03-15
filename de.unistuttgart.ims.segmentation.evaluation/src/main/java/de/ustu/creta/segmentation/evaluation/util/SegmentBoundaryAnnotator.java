@@ -10,7 +10,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import de.ustu.ims.segmentation.type.SegmentBoundary;
+import de.unistuttgart.ims.segmentation.type.SegmentBoundary;
 
 public class SegmentBoundaryAnnotator extends JCasAnnotator_ImplBase {
 
@@ -22,13 +22,12 @@ public class SegmentBoundaryAnnotator extends JCasAnnotator_ImplBase {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void initialize(final UimaContext context)
-			throws ResourceInitializationException {
+	public void initialize(final UimaContext context) throws ResourceInitializationException {
 		super.initialize(context);
 		try {
-			Class<?> clazz = Class.forName(annotationTypeName);
+			final Class<?> clazz = Class.forName(annotationTypeName);
 			annotationType = (Class<? extends Annotation>) clazz;
-		} catch (ClassNotFoundException e) {
+		} catch (final ClassNotFoundException e) {
 			throw new ResourceInitializationException(e);
 		}
 	}
@@ -36,10 +35,9 @@ public class SegmentBoundaryAnnotator extends JCasAnnotator_ImplBase {
 	@Override
 	public void process(JCas jcas) throws AnalysisEngineProcessException {
 
-		for (Annotation anno : JCasUtil.select(jcas, annotationType)) {
-			int b = anno.getBegin();
-			AnnotationFactory.createAnnotation(jcas, b, b,
-					SegmentBoundary.class);
+		for (final Annotation anno : JCasUtil.select(jcas, annotationType)) {
+			final int b = anno.getBegin();
+			AnnotationFactory.createAnnotation(jcas, b, b, SegmentBoundary.class);
 		}
 	}
 

@@ -10,12 +10,12 @@ import org.apache.uima.jcas.JCas;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.unistuttgart.ims.segmentation.type.SegmentBoundary;
+import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 import de.ustu.creta.segmentation.agreement.impl.ScottPi_impl;
 import de.ustu.creta.segmentation.evaluation.MetricFactory;
 import de.ustu.creta.segmentation.evaluation.SegmentationSimilarity;
 import de.ustu.creta.segmentation.evaluation.impl.AbstractFournierMetric;
-import de.ustu.ims.segmentation.type.SegmentBoundary;
-import de.ustu.ims.segmentation.type.SegmentationUnit;
 
 public class TestScottPi {
 	JCas gold, silv;
@@ -30,27 +30,26 @@ public class TestScottPi {
 		gold = JCasFactory.createJCas();
 		gold.setDocumentText(text);
 
-		for (int i = 0; i < text.length() - 1; i++) {
+		for (int i = 0; i < (text.length() - 1); i++) {
 			createAnnotation(gold, i, i + 1, SegmentationUnit.class);
 		}
 
 		silv = JCasFactory.createJCas();
 		silv.setDocumentText(text);
-		for (int i = 0; i < text.length() - 1; i++) {
+		for (int i = 0; i < (text.length() - 1); i++) {
 			createAnnotation(silv, i, i + 1, SegmentationUnit.class);
 		}
 
 		spi = new ScottPi_impl();
-		spi.setObservedAgreementMetric(MetricFactory.getMetric(
-				SegmentationSimilarity.class, SegmentBoundary.class));
+		spi.setObservedAgreementMetric(MetricFactory.getMetric(SegmentationSimilarity.class, SegmentBoundary.class));
 
 	}
 
 	@Test
 	public void testPerfectAgreements() {
-		Random random = new Random();
+		final Random random = new Random();
 		for (int i = 0; i < 5; i++) {
-			int r = random.nextInt(text.length() - 2) + 1;
+			final int r = random.nextInt(text.length() - 2) + 1;
 			createAnnotation(gold, r, r, SegmentBoundary.class);
 			createAnnotation(silv, r, r, SegmentBoundary.class);
 
@@ -60,9 +59,9 @@ public class TestScottPi {
 
 	@Test
 	public void testPerfectAgreementsObserved() {
-		Random random = new Random();
+		final Random random = new Random();
 		for (int i = 0; i < 5; i++) {
-			int r = random.nextInt(text.length() - 2) + 1;
+			final int r = random.nextInt(text.length() - 2) + 1;
 			createAnnotation(gold, r, r, SegmentBoundary.class);
 			createAnnotation(silv, r, r, SegmentBoundary.class);
 
@@ -72,7 +71,7 @@ public class TestScottPi {
 
 	@Test
 	public void testPerfectAgreementsChance() {
-		Random random = new Random();
+		final Random random = new Random();
 
 		int r;
 		r = random.nextInt(text.length() - 2) + 1;

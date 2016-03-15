@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.ustu.ims.segmentation.type.SegmentBoundary;
-import de.ustu.ims.segmentation.type.SegmentationUnit;
+import de.unistuttgart.ims.segmentation.type.SegmentBoundary;
+import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 
 public class TestBoundarySimilarity_Tokens {
 
@@ -22,8 +22,7 @@ public class TestBoundarySimilarity_Tokens {
 
 	@BeforeClass
 	public static void setUpClass() {
-		System.setProperty("python.path",
-				"src/main/resources/python/segeval-2.0.11");
+		System.setProperty("python.path", "src/main/resources/python/segeval-2.0.11");
 	}
 
 	@Before
@@ -59,15 +58,12 @@ public class TestBoundarySimilarity_Tokens {
 		createAnnotation(silv, 21, 27, SegmentationUnit.class);
 		createAnnotation(silv, 27, 28, SegmentationUnit.class);
 
-		bd =
-				MetricFactory.getMetric(BoundarySimilarity.class,
-						SegmentBoundary.class);
+		bd = MetricFactory.getMetric(BoundarySimilarity.class, SegmentBoundary.class);
 	}
 
 	@Test
 	public void testNoSilverBreak() {
-		assertEquals(0.0,
-				bd.scores(gold, silv).get(bd.getClass().getSimpleName()), 1e-5);
+		assertEquals(0.0, bd.scores(gold, silv).get(bd.getClass().getSimpleName()), 1e-5);
 	}
 
 	@Test

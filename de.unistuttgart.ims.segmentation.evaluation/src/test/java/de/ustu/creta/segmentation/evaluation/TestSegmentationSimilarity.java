@@ -11,9 +11,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.unistuttgart.ims.segmentation.type.SegmentBoundary;
+import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 import de.ustu.creta.segmentation.evaluation.impl.SegmentationSimilarity_impl;
-import de.ustu.ims.segmentation.type.SegmentBoundary;
-import de.ustu.ims.segmentation.type.SegmentationUnit;
 
 public class TestSegmentationSimilarity {
 	JCas gold, silv;
@@ -24,8 +24,7 @@ public class TestSegmentationSimilarity {
 
 	@BeforeClass
 	public static void setUpClass() {
-		System.setProperty("python.path",
-				"src/main/resources/python/segeval-2.0.11");
+		System.setProperty("python.path", "src/main/resources/python/segeval-2.0.11");
 	}
 
 	@Before
@@ -59,9 +58,7 @@ public class TestSegmentationSimilarity {
 		createAnnotation(silv, 21, 27, SegmentationUnit.class);
 		createAnnotation(silv, 27, 28, SegmentationUnit.class);
 
-		bd =
-				(SegmentationSimilarity_impl) MetricFactory.getMetric(
-						SegmentationSimilarity.class, SegmentBoundary.class);
+		bd = (SegmentationSimilarity_impl) MetricFactory.getMetric(SegmentationSimilarity.class, SegmentBoundary.class);
 
 	}
 

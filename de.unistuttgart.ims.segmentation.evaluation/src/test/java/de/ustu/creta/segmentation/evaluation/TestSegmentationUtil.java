@@ -11,9 +11,9 @@ import org.apache.uima.jcas.JCas;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.unistuttgart.ims.segmentation.type.SegmentBoundary;
+import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 import de.ustu.creta.segmentation.evaluation.impl.SegmentationUtil;
-import de.ustu.ims.segmentation.type.SegmentBoundary;
-import de.ustu.ims.segmentation.type.SegmentationUnit;
 
 public class TestSegmentationUtil {
 
@@ -50,8 +50,7 @@ public class TestSegmentationUtil {
 		createAnnotation(gold, 0, 0, SegmentBoundary.class);
 		createAnnotation(gold, 15, 15, SegmentBoundary.class);
 		createAnnotation(gold, 28, 28, SegmentBoundary.class);
-		int[] tuple =
-				SegmentationUtil.getMassTuple(gold, SegmentBoundary.class);
+		final int[] tuple = SegmentationUtil.getMassTuple(gold, SegmentBoundary.class);
 		// System.err.println(tuple);
 
 		assertEquals(2, tuple.length);
@@ -64,8 +63,7 @@ public class TestSegmentationUtil {
 	@Test
 	public void testGetMassTuple2() {
 		createAnnotation(gold, 15, 15, SegmentBoundary.class);
-		int[] tuple =
-				SegmentationUtil.getMassTuple(gold, SegmentBoundary.class);
+		final int[] tuple = SegmentationUtil.getMassTuple(gold, SegmentBoundary.class);
 		// System.err.println(tuple);
 		assertEquals(4, tuple[0]);
 		assertEquals(4, tuple[1]);
@@ -76,8 +74,7 @@ public class TestSegmentationUtil {
 
 		createAnnotation(gold, 15, 15, SegmentBoundary.class);
 		createAnnotation(gold, 17, 17, SegmentBoundary.class);
-		int[] tuple =
-				SegmentationUtil.getMassTuple(gold, SegmentBoundary.class);
+		final int[] tuple = SegmentationUtil.getMassTuple(gold, SegmentBoundary.class);
 		System.err.println(tuple);
 		assertEquals(4, tuple[0]);
 		assertEquals(1, tuple[1]);
@@ -90,8 +87,7 @@ public class TestSegmentationUtil {
 		createAnnotation(gold, 4, 4, SegmentBoundary.class);
 		createAnnotation(gold, 13, 13, SegmentBoundary.class);
 		createAnnotation(gold, 18, 18, SegmentBoundary.class);
-		int[] tuple =
-				SegmentationUtil.getMassTuple(gold, SegmentBoundary.class);
+		final int[] tuple = SegmentationUtil.getMassTuple(gold, SegmentBoundary.class);
 		System.err.println(tuple);
 		assertEquals(1, tuple[0]);
 		assertEquals(2, tuple[1]);
@@ -104,8 +100,7 @@ public class TestSegmentationUtil {
 		createAnnotation(gold, 8, 8, SegmentBoundary.class);
 		createAnnotation(gold, 15, 15, SegmentBoundary.class);
 		createAnnotation(gold, 21, 21, SegmentBoundary.class);
-		int[] tuple =
-				SegmentationUtil.getMassTuple(gold, SegmentBoundary.class);
+		final int[] tuple = SegmentationUtil.getMassTuple(gold, SegmentBoundary.class);
 		System.err.println(tuple);
 		assertEquals(2, tuple[0]);
 		assertEquals(2, tuple[1]);
@@ -114,9 +109,9 @@ public class TestSegmentationUtil {
 
 	@Test
 	public void testGetBoundaryString1() {
-		int[] array = new int[] { 1, 2, 2, 2, 4, 2, 1 };
+		final int[] array = new int[] { 1, 2, 2, 2, 4, 2, 1 };
 
-		boolean[] b = SegmentationUtil.getBoundaryString(array);
+		final boolean[] b = SegmentationUtil.getBoundaryString(array);
 		assertEquals(SegmentationUtil.sum(array), b.length);
 		assertTrue(b[0]);
 		assertFalse(b[1]);
@@ -136,9 +131,9 @@ public class TestSegmentationUtil {
 
 	@Test
 	public void testGetBoundaryString2() {
-		int[] array = new int[] { 1, 2, 0, 1, 0, 0, 0 };
+		final int[] array = new int[] { 1, 2, 0, 1, 0, 0, 0 };
 
-		boolean[] b = SegmentationUtil.getBoundaryString(array);
+		final boolean[] b = SegmentationUtil.getBoundaryString(array);
 		assertTrue(b[0]);
 		assertFalse(b[1]);
 		assertTrue(b[2]);
@@ -147,9 +142,9 @@ public class TestSegmentationUtil {
 
 	@Test
 	public void testGetBoundaryString3() {
-		int[] array = new int[] { 1, 2, 0 };
+		final int[] array = new int[] { 1, 2, 0 };
 
-		boolean[] b = SegmentationUtil.getBoundaryString(array);
+		final boolean[] b = SegmentationUtil.getBoundaryString(array);
 		assertTrue(b[0]);
 		assertFalse(b[1]);
 		assertFalse(b[2]);
@@ -157,10 +152,10 @@ public class TestSegmentationUtil {
 
 	@Test
 	public void testGetMassTuple6() {
-		for (int i = 0; i < gold2.getDocumentText().length() + 1; i++) {
+		for (int i = 0; i < (gold2.getDocumentText().length() + 1); i++) {
 			createAnnotation(gold2, i, i, SegmentBoundary.class);
 		}
-		int[] ms = SegmentationUtil.getMassTuple(gold2, SegmentBoundary.class);
+		final int[] ms = SegmentationUtil.getMassTuple(gold2, SegmentBoundary.class);
 		assertEquals(20, ms.length);
 	}
 }

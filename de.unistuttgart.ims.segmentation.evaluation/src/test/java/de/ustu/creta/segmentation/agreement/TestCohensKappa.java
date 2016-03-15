@@ -10,13 +10,13 @@ import org.apache.uima.jcas.JCas;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.unistuttgart.ims.segmentation.type.SegmentBoundary;
+import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 import de.ustu.creta.segmentation.agreement.impl.CohensKappa_impl;
 import de.ustu.creta.segmentation.evaluation.BoundarySimilarity;
 import de.ustu.creta.segmentation.evaluation.MetricFactory;
 import de.ustu.creta.segmentation.evaluation.SegmentationSimilarity;
 import de.ustu.creta.segmentation.evaluation.impl.AbstractFournierMetric;
-import de.ustu.ims.segmentation.type.SegmentBoundary;
-import de.ustu.ims.segmentation.type.SegmentationUnit;
 
 public class TestCohensKappa {
 	JCas gold, silv;
@@ -31,27 +31,26 @@ public class TestCohensKappa {
 		gold = JCasFactory.createJCas();
 		gold.setDocumentText(text);
 
-		for (int i = 0; i < text.length() - 1; i++) {
+		for (int i = 0; i < (text.length() - 1); i++) {
 			createAnnotation(gold, i, i + 1, SegmentationUnit.class);
 		}
 
 		silv = JCasFactory.createJCas();
 		silv.setDocumentText(text);
-		for (int i = 0; i < text.length() - 1; i++) {
+		for (int i = 0; i < (text.length() - 1); i++) {
 			createAnnotation(silv, i, i + 1, SegmentationUnit.class);
 		}
 
 		spi = new CohensKappa_impl();
-		spi.setObservedAgreementMetric(MetricFactory.getMetric(
-				SegmentationSimilarity.class, SegmentBoundary.class));
+		spi.setObservedAgreementMetric(MetricFactory.getMetric(SegmentationSimilarity.class, SegmentBoundary.class));
 
 	}
 
 	@Test
 	public void testPerfectAgreements() {
-		Random random = new Random();
+		final Random random = new Random();
 		for (int i = 0; i < 5; i++) {
-			int r = random.nextInt(text.length() - 2) + 1;
+			final int r = random.nextInt(text.length() - 2) + 1;
 			createAnnotation(gold, r, r, SegmentBoundary.class);
 			createAnnotation(silv, r, r, SegmentBoundary.class);
 
@@ -61,9 +60,9 @@ public class TestCohensKappa {
 
 	@Test
 	public void testPerfectAgreementsObserved() {
-		Random random = new Random();
+		final Random random = new Random();
 		for (int i = 0; i < 5; i++) {
-			int r = random.nextInt(text.length() - 2) + 1;
+			final int r = random.nextInt(text.length() - 2) + 1;
 			createAnnotation(gold, r, r, SegmentBoundary.class);
 			createAnnotation(silv, r, r, SegmentBoundary.class);
 
@@ -86,8 +85,7 @@ public class TestCohensKappa {
 
 	@Test
 	public void testGetChanceAgreement2() {
-		spi.setObservedAgreementMetric(MetricFactory.getMetric(
-				BoundarySimilarity.class, SegmentBoundary.class));
+		spi.setObservedAgreementMetric(MetricFactory.getMetric(BoundarySimilarity.class, SegmentBoundary.class));
 		createAnnotation(gold, 5, 5, SegmentBoundary.class);
 		createAnnotation(silv, 6, 6, SegmentBoundary.class);
 		assertEquals(0.0059, spi.getChanceAgreement(gold, silv), 1e-3);
@@ -100,7 +98,7 @@ public class TestCohensKappa {
 	}
 
 	/**
-	 * 
+	 *
 	 * <pre>
 	 * >>> ds = Dataset(
 	 *    {'text':
@@ -114,8 +112,8 @@ public class TestCohensKappa {
 	 */
 	@Test
 	public void testFullDisagreement() {
-		for (int i = 1; i < text.length() - 1; i++) {
-			if (i % 2 == 0)
+		for (int i = 1; i < (text.length() - 1); i++) {
+			if ((i % 2) == 0)
 				createAnnotation(gold, i, i, SegmentBoundary.class);
 			else
 				createAnnotation(silv, i, i, SegmentBoundary.class);
@@ -124,14 +122,14 @@ public class TestCohensKappa {
 		assertEquals(0.6923, spi.getObservedAgreement(gold, silv), 1e-4);
 		assertEquals(0.5905, spi.agr(gold, silv), 1e-4);
 
-		spi.setObservedAgreementMetric(MetricFactory.getMetric(
-				BoundarySimilarity.class, SegmentBoundary.class));
+		spi.setObservedAgreementMetric(MetricFactory.getMetric(BoundarySimilarity.class, SegmentBoundary.class));
 		assertEquals(0.428571, spi.getObservedAgreement(gold, silv), 1e-4);
 		assertEquals(0.239595, spi.agr(gold, silv), 1e-4);
 	}
 
 	/**
 	 * Verified with segeval.
+	 * 
 	 * <pre>
 	 * >>> dataset3 = Dataset(
 	 * {'text':
@@ -152,13 +150,11 @@ public class TestCohensKappa {
 		createAnnotation(gold, 5, 5, SegmentBoundary.class);
 		createAnnotation(silv, 6, 6, SegmentBoundary.class);
 
-		assertEquals(0.961538,
-				spi.getObservedAgreementMetric().score(gold, silv), 1e-4);
+		assertEquals(0.961538, spi.getObservedAgreementMetric().score(gold, silv), 1e-4);
 		assertEquals(0.961538, spi.getObservedAgreement(gold, silv), 1e-4);
 		assertEquals(0.961309, spi.agr(gold, silv), 1e-4);
 
-		spi.setObservedAgreementMetric(MetricFactory.getMetric(
-				BoundarySimilarity.class, SegmentBoundary.class));
+		spi.setObservedAgreementMetric(MetricFactory.getMetric(BoundarySimilarity.class, SegmentBoundary.class));
 		assertEquals(0.497023, spi.agr(gold, silv), 1e-4);
 
 	}

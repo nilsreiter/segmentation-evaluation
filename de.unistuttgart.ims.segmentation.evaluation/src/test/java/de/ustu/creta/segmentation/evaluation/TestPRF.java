@@ -10,7 +10,7 @@ import org.apache.uima.jcas.JCas;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.ustu.ims.segmentation.type.Segment;
+import de.unistuttgart.ims.segmentation.type.Segment;
 
 public class TestPRF {
 	JCas gold, silv;
@@ -23,10 +23,8 @@ public class TestPRF {
 	public void setUp() throws Exception {
 		gold = JCasFactory.createJCas();
 		gold.setDocumentText(text);
-		AnnotationFactory.createAnnotation(gold, 0, 5, Segment.class).setValue(
-				"1");
-		AnnotationFactory.createAnnotation(gold, 6, 9, Segment.class).setValue(
-				"2");
+		AnnotationFactory.createAnnotation(gold, 0, 5, Segment.class).setValue("1");
+		AnnotationFactory.createAnnotation(gold, 6, 9, Segment.class).setValue("2");
 
 		silv = JCasFactory.createJCas();
 		silv.setDocumentText(text);
@@ -42,11 +40,9 @@ public class TestPRF {
 
 	@Test
 	public void testPerfectAnnotations() {
-		AnnotationFactory.createAnnotation(silv, 0, 5, Segment.class).setValue(
-				"1");
-		AnnotationFactory.createAnnotation(silv, 6, 9, Segment.class).setValue(
-				"2");
-		Map<String, Double> result = bd.scores(gold, silv);
+		AnnotationFactory.createAnnotation(silv, 0, 5, Segment.class).setValue("1");
+		AnnotationFactory.createAnnotation(silv, 6, 9, Segment.class).setValue("2");
+		final Map<String, Double> result = bd.scores(gold, silv);
 		assertEquals(1.0, result.get("_" + Strings.PRECISION), 1e-5);
 		assertEquals(1.0, result.get("_" + Strings.RECALL), 1e-5);
 		assertEquals(1.0, result.get("_" + Strings.FSCORE), 1e-5);

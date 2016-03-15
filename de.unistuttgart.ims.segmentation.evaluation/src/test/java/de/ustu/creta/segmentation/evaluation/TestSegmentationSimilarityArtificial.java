@@ -11,9 +11,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.unistuttgart.ims.segmentation.type.SegmentBoundary;
+import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 import de.ustu.creta.segmentation.evaluation.impl.SegmentationSimilarity_impl;
-import de.ustu.ims.segmentation.type.SegmentBoundary;
-import de.ustu.ims.segmentation.type.SegmentationUnit;
 
 public class TestSegmentationSimilarityArtificial {
 	JCas gold, silv;
@@ -24,8 +24,7 @@ public class TestSegmentationSimilarityArtificial {
 
 	@BeforeClass
 	public static void setUpClass() {
-		System.setProperty("python.path",
-				"src/main/resources/python/segeval-2.0.11");
+		System.setProperty("python.path", "src/main/resources/python/segeval-2.0.11");
 	}
 
 	@Before
@@ -36,19 +35,17 @@ public class TestSegmentationSimilarityArtificial {
 		// AnnotationFactory.createAnnotation(gold, 14, 14,
 		// SegmentBoundary.class);
 
-		for (int i = 0; i < text.length() - 1; i++) {
+		for (int i = 0; i < (text.length() - 1); i++) {
 			createAnnotation(gold, i, i + 1, SegmentationUnit.class);
 		}
 
 		silv = JCasFactory.createJCas();
 		silv.setDocumentText(text);
-		for (int i = 0; i < text.length() - 1; i++) {
+		for (int i = 0; i < (text.length() - 1); i++) {
 			createAnnotation(silv, i, i + 1, SegmentationUnit.class);
 		}
 
-		bd =
-				(SegmentationSimilarity_impl) MetricFactory.getMetric(
-						SegmentationSimilarity.class, SegmentBoundary.class);
+		bd = (SegmentationSimilarity_impl) MetricFactory.getMetric(SegmentationSimilarity.class, SegmentBoundary.class);
 
 	}
 
@@ -59,6 +56,7 @@ public class TestSegmentationSimilarityArtificial {
 
 	/**
 	 * <h3>Second Test Set</h3>
+	 * 
 	 * <pre>
 	 * >>> ds = Dataset(
 	 * 	{"text":{
@@ -101,8 +99,7 @@ public class TestSegmentationSimilarityArtificial {
 	@Test
 	public void testMaxVsMin() {
 		for (int i = 1; i < text.length(); i++) {
-			AnnotationFactory.createAnnotation(gold, i, i,
-					SegmentBoundary.class);
+			AnnotationFactory.createAnnotation(gold, i, i, SegmentBoundary.class);
 		}
 
 		assertEquals(0, bd.score(gold, silv), 1e-5);

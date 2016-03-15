@@ -8,7 +8,7 @@ import org.apache.uima.jcas.JCas;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.ustu.ims.segmentation.type.SegmentBoundary;
+import de.unistuttgart.ims.segmentation.type.SegmentBoundary;
 
 public class TestBreakDifference {
 
@@ -28,34 +28,27 @@ public class TestBreakDifference {
 		silv = JCasFactory.createJCas();
 		silv.setDocumentText(text);
 
-		bd =
-				MetricFactory.getMetric(BreakDifference.class,
-						SegmentBoundary.class);
+		bd = MetricFactory.getMetric(BreakDifference.class, SegmentBoundary.class);
 	}
 
 	@Test
 	public void testNoSilverBreak() {
-		assertEquals(28.0,
-				bd.scores(gold, silv).get(bd.getClass().getSimpleName()), 1e-5);
+		assertEquals(28.0, bd.scores(gold, silv).get(bd.getClass().getSimpleName()), 1e-5);
 	}
 
 	@Test
 	public void testBeginAndEnd() {
 		AnnotationFactory.createAnnotation(silv, 0, 1, SegmentBoundary.class);
-		AnnotationFactory.createAnnotation(silv, text.length() - 1,
-				text.length(), SegmentBoundary.class);
-		assertEquals(6.0,
-				bd.scores(gold, silv).get(bd.getClass().getSimpleName()), 1e-5);
+		AnnotationFactory.createAnnotation(silv, text.length() - 1, text.length(), SegmentBoundary.class);
+		assertEquals(6.0, bd.scores(gold, silv).get(bd.getClass().getSimpleName()), 1e-5);
 	}
 
 	@Test
 	public void testEverywhere() {
 		for (int i = 0; i < text.length(); i++) {
-			AnnotationFactory.createAnnotation(silv, i, i + 1,
-					SegmentBoundary.class);
+			AnnotationFactory.createAnnotation(silv, i, i + 1, SegmentBoundary.class);
 		}
-		assertEquals(0.0,
-				bd.scores(gold, silv).get(bd.getClass().getSimpleName()), 1e-5);
+		assertEquals(0.0, bd.scores(gold, silv).get(bd.getClass().getSimpleName()), 1e-5);
 	}
 
 	@Test
@@ -63,7 +56,6 @@ public class TestBreakDifference {
 		AnnotationFactory.createAnnotation(silv, 5, 6, SegmentBoundary.class);
 		AnnotationFactory.createAnnotation(silv, 20, 21, SegmentBoundary.class);
 
-		assertEquals(0.0,
-				bd.scores(gold, silv).get(bd.getClass().getSimpleName()), 1e-5);
+		assertEquals(0.0, bd.scores(gold, silv).get(bd.getClass().getSimpleName()), 1e-5);
 	}
 }
