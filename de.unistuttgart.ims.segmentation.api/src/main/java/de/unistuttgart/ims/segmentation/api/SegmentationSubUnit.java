@@ -1,7 +1,7 @@
 
 
-/* First created by JCasGen Wed May 20 09:13:24 CEST 2015 */
-package de.ustu.ims.segmentation.type;
+/* First created by JCasGen Tue Mar 15 20:33:26 CET 2016 */
+package de.unistuttgart.ims.segmentation.api;
 
 import org.apache.uima.jcas.JCas; 
 import org.apache.uima.jcas.JCasRegistry;
@@ -11,8 +11,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Wed May 20 09:13:24 CEST 2015
- * XML source: /Users/reiterns/Documents/Java/de.ustu.creta.segmentation.api/segmentation.api/src/main/java/de/ustu/ims/segmentation/api/Segmentation.xml
+ * Updated by JCasGen Tue Mar 15 20:33:26 CET 2016
+ * XML source: /Users/reiterns/Documents/Workspace-Mars/segmentation-evaluation/de.unistuttgart.ims.segmentation.api/target/jcasgen/typesystem.xml
  * @generated */
 public class SegmentationSubUnit extends Annotation {
   /** @generated
@@ -25,9 +25,7 @@ public class SegmentationSubUnit extends Annotation {
    */
   @SuppressWarnings ("hiding")
   public final static int type = typeIndexID;
-  /** @generated
-   * @return index of the type  
-   */
+  /** @generated  */
   @Override
   public              int getTypeIndexID() {return typeIndexID;}
  
@@ -36,28 +34,19 @@ public class SegmentationSubUnit extends Annotation {
   protected SegmentationSubUnit() {/* intentionally empty block */}
     
   /** Internal - constructor used by generator 
-   * @generated
-   * @param addr low level Feature Structure reference
-   * @param type the type of this Feature Structure 
-   */
+   * @generated */
   public SegmentationSubUnit(int addr, TOP_Type type) {
     super(addr, type);
     readObject();
   }
   
-  /** @generated
-   * @param jcas JCas to which this Feature Structure belongs 
-   */
+  /** @generated */
   public SegmentationSubUnit(JCas jcas) {
     super(jcas);
     readObject();   
   } 
 
-  /** @generated
-   * @param jcas JCas to which this Feature Structure belongs
-   * @param begin offset to the begin spot in the SofA
-   * @param end offset to the end spot in the SofA 
-  */  
+  /** @generated */  
   public SegmentationSubUnit(JCas jcas, int begin, int end) {
     super(jcas);
     setBegin(begin);
@@ -65,13 +54,10 @@ public class SegmentationSubUnit extends Annotation {
     readObject();
   }   
 
-  /** 
-   * <!-- begin-user-doc -->
-   * Write your own initialization here
-   * <!-- end-user-doc -->
-   *
-   * @generated modifiable 
-   */
+  /** <!-- begin-user-doc -->
+    * Write your own initialization here
+    * <!-- end-user-doc -->
+  @generated modifiable */
   private void readObject() {/*default - does nothing empty block */}
      
 }

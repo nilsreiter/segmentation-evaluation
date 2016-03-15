@@ -1,6 +1,6 @@
 
-/* First created by JCasGen Wed May 20 09:02:43 CEST 2015 */
-package de.ustu.ims.segmentation.type;
+/* First created by JCasGen Tue Mar 15 20:33:26 CET 2016 */
+package de.unistuttgart.ims.segmentation.api;
 
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
@@ -14,12 +14,10 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Wed May 20 09:02:43 CEST 2015
+ * Updated by JCasGen Tue Mar 15 20:33:26 CET 2016
  * @generated */
 public class Segment_Type extends Annotation_Type {
-  /** @generated 
-   * @return the generator for this type
-   */
+  /** @generated */
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
   /** @generated */
@@ -44,28 +42,22 @@ public class Segment_Type extends Annotation_Type {
   /** @generated 
      @modifiable */
   @SuppressWarnings ("hiding")
-  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.ustu.ims.segmentation.type.Segment");
+  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.unistuttgart.ims.segmentation.type.Segment");
  
   /** @generated */
   final Feature casFeat_Value;
   /** @generated */
   final int     casFeatCode_Value;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
+  /** @generated */ 
   public String getValue(int addr) {
         if (featOkTst && casFeat_Value == null)
-      jcas.throwFeatMissing("Value", "de.ustu.ims.segmentation.type.Segment");
+      jcas.throwFeatMissing("Value", "de.unistuttgart.ims.segmentation.type.Segment");
     return ll_cas.ll_getStringValue(addr, casFeatCode_Value);
   }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
+  /** @generated */    
   public void setValue(int addr, String v) {
         if (featOkTst && casFeat_Value == null)
-      jcas.throwFeatMissing("Value", "de.ustu.ims.segmentation.type.Segment");
+      jcas.throwFeatMissing("Value", "de.unistuttgart.ims.segmentation.type.Segment");
     ll_cas.ll_setStringValue(addr, casFeatCode_Value, v);}
     
   
@@ -73,10 +65,7 @@ public class Segment_Type extends Annotation_Type {
 
 
   /** initialize variables to correspond with Cas Type and Features
-	 * @generated
-	 * @param jcas JCas
-	 * @param casType Type 
-	 */
+	* @generated */
   public Segment_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());

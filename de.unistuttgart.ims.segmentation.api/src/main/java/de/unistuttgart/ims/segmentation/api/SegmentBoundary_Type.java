@@ -1,6 +1,6 @@
 
-/* First created by JCasGen Wed May 20 09:02:43 CEST 2015 */
-package de.ustu.ims.segmentation.type;
+/* First created by JCasGen Tue Mar 15 20:33:26 CET 2016 */
+package de.unistuttgart.ims.segmentation.api;
 
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
@@ -14,12 +14,10 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Wed May 20 09:02:43 CEST 2015
+ * Updated by JCasGen Tue Mar 15 20:33:26 CET 2016
  * @generated */
 public class SegmentBoundary_Type extends Annotation_Type {
-  /** @generated 
-   * @return the generator for this type
-   */
+  /** @generated */
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
   /** @generated */
@@ -44,28 +42,22 @@ public class SegmentBoundary_Type extends Annotation_Type {
   /** @generated 
      @modifiable */
   @SuppressWarnings ("hiding")
-  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.ustu.ims.segmentation.type.SegmentBoundary");
+  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.unistuttgart.ims.segmentation.type.SegmentBoundary");
  
   /** @generated */
   final Feature casFeat_Level;
   /** @generated */
   final int     casFeatCode_Level;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
+  /** @generated */ 
   public int getLevel(int addr) {
         if (featOkTst && casFeat_Level == null)
-      jcas.throwFeatMissing("Level", "de.ustu.ims.segmentation.type.SegmentBoundary");
+      jcas.throwFeatMissing("Level", "de.unistuttgart.ims.segmentation.type.SegmentBoundary");
     return ll_cas.ll_getIntValue(addr, casFeatCode_Level);
   }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
+  /** @generated */    
   public void setLevel(int addr, int v) {
         if (featOkTst && casFeat_Level == null)
-      jcas.throwFeatMissing("Level", "de.ustu.ims.segmentation.type.SegmentBoundary");
+      jcas.throwFeatMissing("Level", "de.unistuttgart.ims.segmentation.type.SegmentBoundary");
     ll_cas.ll_setIntValue(addr, casFeatCode_Level, v);}
     
   
@@ -73,10 +65,7 @@ public class SegmentBoundary_Type extends Annotation_Type {
 
 
   /** initialize variables to correspond with Cas Type and Features
-	 * @generated
-	 * @param jcas JCas
-	 * @param casType Type 
-	 */
+	* @generated */
   public SegmentBoundary_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
