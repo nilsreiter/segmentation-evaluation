@@ -1,3 +1,5 @@
+[master ![Build Status](https://travis-ci.org/nilsreiter/segmentation-evaluation.svg?branch=master)](https://travis-ci.org/nilsreiter/segmentation-evaluation)
+
 # segmentation-evaluation
 Java package for evaluating text segmentation
 
