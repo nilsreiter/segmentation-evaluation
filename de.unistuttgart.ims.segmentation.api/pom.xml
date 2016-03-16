@@ -42,7 +42,7 @@
 							<!-- REQUIRED -->
 							<typeSystemIncludes>
 								<!-- one or more ant-like file patterns identifying top level descriptors -->
-								<typeSystemInclude>src/main/java/de/unistuttgart/ims/segmentation/api/Segmentation.xml</typeSystemInclude>
+								<typeSystemInclude>src/main/resources/de/unistuttgart/ims/segmentation/api/Segmentation.xml</typeSystemInclude>
 							</typeSystemIncludes>
 
 							<!-- OPTIONAL -->
