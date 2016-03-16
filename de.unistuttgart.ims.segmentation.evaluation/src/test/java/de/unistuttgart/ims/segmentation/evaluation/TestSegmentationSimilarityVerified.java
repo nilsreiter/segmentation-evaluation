@@ -10,13 +10,11 @@ import org.apache.uima.jcas.JCas;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.unistuttgart.ims.segmentation.evaluation.MetricFactory;
-import de.unistuttgart.ims.segmentation.evaluation.SegmentationSimilarity;
+import de.unistuttgart.ims.commons.Counter;
 import de.unistuttgart.ims.segmentation.evaluation.FournierMetric.Transposition;
+import de.unistuttgart.ims.segmentation.evaluation.impl.AbstractFournierMetric.Substitution;
 import de.unistuttgart.ims.segmentation.evaluation.impl.SegmentationSimilarity_impl;
 import de.unistuttgart.ims.segmentation.evaluation.impl.SegmentationUtil;
-import de.unistuttgart.ims.segmentation.evaluation.impl.AbstractFournierMetric.Substitution;
-import de.unistuttgart.ims.segmentation.evaluation.util.Counter;
 import de.unistuttgart.ims.segmentation.type.SegmentBoundary;
 import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 

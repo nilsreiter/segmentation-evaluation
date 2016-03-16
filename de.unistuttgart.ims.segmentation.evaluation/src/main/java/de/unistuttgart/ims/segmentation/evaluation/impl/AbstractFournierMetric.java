@@ -4,14 +4,13 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.unistuttgart.ims.commons.Counter;
 import de.unistuttgart.ims.segmentation.evaluation.FournierMetric;
-import de.unistuttgart.ims.segmentation.evaluation.util.Counter;
 
 public abstract class AbstractFournierMetric implements FournierMetric {
 
 	int windowSize = 2;
-	protected TranspositionWeightingFunction tpFunction =
-			new TranspositionWeightingFunction() {
+	protected TranspositionWeightingFunction tpFunction = new TranspositionWeightingFunction() {
 		@Override
 		public double getWeight(Transposition tp) {
 			return tp.getMass();
@@ -29,8 +28,7 @@ public abstract class AbstractFournierMetric implements FournierMetric {
 	}
 
 	@Override
-	public void setTranspositionPenaltyFunction(
-			TranspositionWeightingFunction tpf) {
+	public void setTranspositionPenaltyFunction(TranspositionWeightingFunction tpf) {
 		tpFunction = tpf;
 	}
 
@@ -41,7 +39,7 @@ public abstract class AbstractFournierMetric implements FournierMetric {
 
 	@Deprecated
 	public List<Integer> getPotentialSubstitions(boolean[][] boundaries) {
-		List<Integer> substOperations = new LinkedList<Integer>();
+		final List<Integer> substOperations = new LinkedList<Integer>();
 		for (int i = 0; i < boundaries[0].length; i++) {
 			if (boundaries[0][i] ^ boundaries[1][i]) {
 				substOperations.add((boundaries[0][i] ? i : -i));
@@ -51,30 +49,27 @@ public abstract class AbstractFournierMetric implements FournierMetric {
 	}
 
 	public List<Substitution> getPotentialSubstitions2(boolean[][] boundaries) {
-		List<Substitution> substOperations = new LinkedList<Substitution>();
+		final List<Substitution> substOperations = new LinkedList<Substitution>();
 		for (int i = 0; i < boundaries[0].length; i++) {
 			if (boundaries[0][i] ^ boundaries[1][i]) {
-				substOperations.add(new Substitution(i, (boundaries[0][i] ? 0
-						: 1)));
+				substOperations.add(new Substitution(i, (boundaries[0][i] ? 0 : 1)));
 			}
 		}
 		return substOperations;
 	}
 
 	@Deprecated
-	public Counter<Transposition> getTranspositions(
-			List<Integer> substOperations) {
-		Counter<Transposition> potTranspositions = new Counter<Transposition>();
+	public Counter<Transposition> getTranspositions(List<Integer> substOperations) {
+		final Counter<Transposition> potTranspositions = new Counter<Transposition>();
 
 		// finding possible transpositions
-		Iterator<Integer> iterator = substOperations.iterator();
+		final Iterator<Integer> iterator = substOperations.iterator();
 		while (iterator.hasNext()) {
-			int j = iterator.next();
+			final int j = iterator.next();
 			if (iterator.hasNext()) {
-				int i = iterator.next();
-				if (Math.abs(i) - Math.abs(j) < getWindowSize() && i * j <= 0) {
-					potTranspositions.add(new Transposition_impl(Math.abs(j),
-							Math.abs(i)), i - j);
+				final int i = iterator.next();
+				if (((Math.abs(i) - Math.abs(j)) < getWindowSize()) && ((i * j) <= 0)) {
+					potTranspositions.add(new Transposition_impl(Math.abs(j), Math.abs(i)), i - j);
 				}
 			}
 
@@ -83,22 +78,18 @@ public abstract class AbstractFournierMetric implements FournierMetric {
 		return potTranspositions;
 	}
 
-	public Counter<Transposition> getTranspositions2(
-			List<Substitution> substOperations) {
-		Counter<Transposition> potTranspositions = new Counter<Transposition>();
+	public Counter<Transposition> getTranspositions2(List<Substitution> substOperations) {
+		final Counter<Transposition> potTranspositions = new Counter<Transposition>();
 
 		// finding possible transpositions
-		Iterator<Substitution> iterator = substOperations.iterator();
+		final Iterator<Substitution> iterator = substOperations.iterator();
 		while (iterator.hasNext()) {
-			Substitution j = iterator.next();
+			final Substitution j = iterator.next();
 			if (iterator.hasNext()) {
-				Substitution i = iterator.next();
-				if (i.getPosition() - j.getPosition() < getWindowSize()
-						&& i.getSequence() != j.getSequence()) {
-					potTranspositions.add(
-							new Transposition_impl(j.getPosition(), i
-									.getPosition()),
-									i.getPosition() - j.getPosition());
+				final Substitution i = iterator.next();
+				if (((i.getPosition() - j.getPosition()) < getWindowSize()) && (i.getSequence() != j.getSequence())) {
+					potTranspositions.add(new Transposition_impl(j.getPosition(), i.getPosition()),
+							i.getPosition() - j.getPosition());
 				}
 			}
 
@@ -108,7 +99,7 @@ public abstract class AbstractFournierMetric implements FournierMetric {
 	}
 
 	public boolean[][] getBoundaries(int[] ms1, int[] ms2) {
-		boolean[][] boundaries = new boolean[2][];
+		final boolean[][] boundaries = new boolean[2][];
 		boundaries[0] = SegmentationUtil.getBoundaryString(ms1);
 		boundaries[1] = SegmentationUtil.getBoundaryString(ms2);
 		return boundaries;
@@ -118,8 +109,8 @@ public abstract class AbstractFournierMetric implements FournierMetric {
 		int source, target;
 
 		public Transposition_impl(int s1, int s2) {
-			this.source = s1;
-			this.target = s2;
+			source = s1;
+			target = s2;
 		}
 
 		@Override

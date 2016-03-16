@@ -14,9 +14,9 @@ import org.apache.uima.jcas.tcas.Annotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.unistuttgart.ims.commons.Counter;
 import de.unistuttgart.ims.segmentation.evaluation.PRF;
 import de.unistuttgart.ims.segmentation.evaluation.Strings;
-import de.unistuttgart.ims.segmentation.evaluation.util.Counter;
 
 public class PRF_impl implements PRF {
 
@@ -34,16 +34,13 @@ public class PRF_impl implements PRF {
 	@Override
 	public boolean init(JCas gold) {
 		try {
-			feature =
-					gold.getRequiredFeature(
-							gold.getTypeSystem().getType(
-									annotationClass.getCanonicalName()),
-									featureName);
-		} catch (CASRuntimeException e) {
+			feature = gold.getRequiredFeature(gold.getTypeSystem().getType(annotationClass.getCanonicalName()),
+					featureName);
+		} catch (final CASRuntimeException e) {
 			logger.debug(e.getLocalizedMessage());
 			e.printStackTrace();
 			return false;
-		} catch (CASException e) {
+		} catch (final CASException e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -52,30 +49,27 @@ public class PRF_impl implements PRF {
 
 	@Override
 	public Map<String, Double> scores(JCas gold, JCas silver) {
-		int goldNumber = JCasUtil.select(gold, annotationClass).size();
-		int silverNumber = JCasUtil.select(silver, annotationClass).size();
+		final int goldNumber = JCasUtil.select(gold, annotationClass).size();
+		final int silverNumber = JCasUtil.select(silver, annotationClass).size();
 		if (goldNumber != silverNumber) {
 			logger.error("Number of annotations not matching.");
 			throw new RuntimeException(
-					"Number of annotations not matching (gold: " + goldNumber
-							+ ", silver: " + silverNumber + ").");
+					"Number of annotations not matching (gold: " + goldNumber + ", silver: " + silverNumber + ").");
 		}
 		// int fp = 0, fn = 0;
-		Counter<String> tp = new Counter<String>();
-		Counter<String> fp = new Counter<String>();
-		Counter<String> fn = new Counter<String>();
-		Set<String> categories = new HashSet<String>();
-		for (Annotation goldAnno : JCasUtil.select(gold, annotationClass)) {
-			Annotation silverAnno =
-					JCasUtil.selectCovered(silver, annotationClass,
-							goldAnno.getBegin(), goldAnno.getEnd()).get(0);
+		final Counter<String> tp = new Counter<String>();
+		final Counter<String> fp = new Counter<String>();
+		final Counter<String> fn = new Counter<String>();
+		final Set<String> categories = new HashSet<String>();
+		for (final Annotation goldAnno : JCasUtil.select(gold, annotationClass)) {
+			final Annotation silverAnno = JCasUtil
+					.selectCovered(silver, annotationClass, goldAnno.getBegin(), goldAnno.getEnd()).get(0);
 
 			String fs_gold = null, fs_silver = null;
 			fs_gold = goldAnno.getStringValue(feature);
 			fs_silver = silverAnno.getStringValue(feature);
 			categories.add(String.valueOf(fs_gold));
-			if ((fs_gold == null && fs_silver == null)
-					|| (fs_gold != null && fs_gold.equals(fs_silver))) {
+			if (((fs_gold == null) && (fs_silver == null)) || ((fs_gold != null) && fs_gold.equals(fs_silver))) {
 				tp.add(String.valueOf(fs_gold));
 			} else {
 				fp.add(String.valueOf(fs_silver));
@@ -90,27 +84,27 @@ public class PRF_impl implements PRF {
 		default:
 			res = getMicroAverage(tp, fp, fn);
 		}
-		if (isClassWise()) for (String c : categories) {
-			res.putAll(getPRF(tp.get(c), fp.get(c), fn.get(c), c + "_"));
-		}
+		if (isClassWise())
+			for (final String c : categories) {
+				res.putAll(getPRF(tp.get(c), fp.get(c), fn.get(c), c + "_"));
+			}
 		return res;
 	}
 
 	Map<String, Double> getPRF(int tp, int fp, int fn, String prefix) {
-		Map<String, Double> result = new HashMap<String, Double>();
-		double prec = (double) tp / ((double) (tp + fp));
-		double rec = (double) tp / ((double) (tp + fn));
-		double f = (2 * prec * rec) / (prec + rec);
+		final Map<String, Double> result = new HashMap<String, Double>();
+		final double prec = (double) tp / ((double) (tp + fp));
+		final double rec = (double) tp / ((double) (tp + fn));
+		final double f = (2 * prec * rec) / (prec + rec);
 		result.put(prefix + Strings.PRECISION, prec);
 		result.put(prefix + Strings.RECALL, rec);
 		result.put(prefix + Strings.FSCORE, f);
 		return result;
 	}
 
-	Map<String, Double> getMicroAverage(Counter<String> tpc,
-			Counter<String> fpc, Counter<String> fnc) {
+	Map<String, Double> getMicroAverage(Counter<String> tpc, Counter<String> fpc, Counter<String> fnc) {
 
-		int tp = sum(tpc), fp = sum(fpc), fn = sum(fnc);
+		final int tp = sum(tpc), fp = sum(fpc), fn = sum(fnc);
 		return getPRF(tp, fp, fn, "_");
 
 	}
@@ -145,7 +139,7 @@ public class PRF_impl implements PRF {
 
 	public int sum(Counter<?> c) {
 		int i = 0;
-		for (Integer o : c.values()) {
+		for (final Integer o : c.values()) {
 			i += o;
 		}
 		return i;

@@ -10,8 +10,8 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 
+import de.unistuttgart.ims.commons.Counter;
 import de.unistuttgart.ims.segmentation.evaluation.SegmentationSimilarity;
-import de.unistuttgart.ims.segmentation.evaluation.util.Counter;
 import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 
 public class SegmentationSimilarity_impl extends AbstractFournierMetric implements SegmentationSimilarity {

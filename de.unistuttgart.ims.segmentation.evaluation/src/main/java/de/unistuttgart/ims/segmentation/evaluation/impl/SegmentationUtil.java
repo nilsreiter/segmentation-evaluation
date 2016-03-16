@@ -13,7 +13,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import de.unistuttgart.ims.segmentation.evaluation.util.Counter;
+import de.unistuttgart.ims.commons.Counter;
 import de.unistuttgart.ims.segmentation.evaluation.util.SegmentBoundaryAnnotator;
 import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 
