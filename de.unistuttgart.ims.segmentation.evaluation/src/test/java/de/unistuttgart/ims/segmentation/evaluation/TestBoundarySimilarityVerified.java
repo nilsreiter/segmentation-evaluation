@@ -8,8 +8,6 @@ import org.apache.uima.jcas.JCas;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.unistuttgart.ims.segmentation.evaluation.BoundarySimilarity;
-import de.unistuttgart.ims.segmentation.evaluation.MetricFactory;
 import de.unistuttgart.ims.segmentation.evaluation.FournierMetric.Transposition;
 import de.unistuttgart.ims.segmentation.evaluation.FournierMetric.TranspositionWeightingFunction;
 import de.unistuttgart.ims.segmentation.evaluation.impl.BoundarySimilarity_impl;
@@ -106,7 +104,7 @@ public class TestBoundarySimilarityVerified {
 
 		bd.setWindowSize(5);
 		bd.setTranspositionPenaltyFunction(new TranspositionWeightingFunction() {
-			@Override
+
 			public double getWeight(Transposition tp) {
 				return 0;
 			}

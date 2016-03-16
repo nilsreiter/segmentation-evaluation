@@ -12,14 +12,12 @@ public class CohensKappa_impl implements CohensKappa {
 
 	Metric observedAgreementMetric;
 
-	@Override
 	public double agr(JCas... jcas) {
 		final double obs = getObservedAgreement(jcas);
 		final double chc = getChanceAgreement(jcas);
 		return (obs - chc) / (1 - chc);
 	}
 
-	@Override
 	public double getObservedAgreement(JCas... jcas) {
 		final int mass = JCasUtil.select(jcas[0], SegmentationUnit.class).size();
 		double z = 0;
@@ -35,7 +33,6 @@ public class CohensKappa_impl implements CohensKappa {
 		return z / n;
 	}
 
-	@Override
 	public double getChanceAgreement(JCas... jcas) {
 		final int mass = JCasUtil.select(jcas[0], SegmentationUnit.class).size();
 
@@ -44,13 +41,11 @@ public class CohensKappa_impl implements CohensKappa {
 		return cha0 * cha1;
 	}
 
-	@Override
 	public void setObservedAgreementMetric(Metric metric) {
 		observedAgreementMetric = metric;
 
 	}
 
-	@Override
 	public Metric getObservedAgreementMetric() {
 		return observedAgreementMetric;
 	}

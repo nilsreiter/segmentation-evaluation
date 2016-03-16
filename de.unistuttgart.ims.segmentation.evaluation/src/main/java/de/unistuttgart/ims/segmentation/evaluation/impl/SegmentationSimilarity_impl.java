@@ -21,12 +21,10 @@ public class SegmentationSimilarity_impl extends AbstractFournierMetric implemen
 		boundaryType = annotationType;
 	}
 
-	@Override
 	public boolean init(JCas gold) {
 		return true;
 	}
 
-	@Override
 	public Map<String, Double> scores(JCas jcas1, JCas jcas2) {
 		final HashMap<String, Double> map = new HashMap<String, Double>();
 		map.put(getClass().getSimpleName(), score(jcas1, jcas2));
@@ -54,7 +52,7 @@ public class SegmentationSimilarity_impl extends AbstractFournierMetric implemen
 
 		for (final Transposition tp : potTranspositions.keySet()) {
 			substOperations.removeIf(new Predicate<Substitution>() {
-				@Override
+
 				public boolean test(Substitution t) {
 					return ((tp.getTarget() == t.getPosition()) || (tp.getSource() == t.getPosition()));
 				}
@@ -78,7 +76,6 @@ public class SegmentationSimilarity_impl extends AbstractFournierMetric implemen
 		return substOp.size();
 	}
 
-	@Override
 	public double score(JCas jcas1, JCas jcas2) {
 		final double mass = JCasUtil.select(jcas1, SegmentationUnit.class).size();
 		final double editDistance = getEditDistance(jcas1, jcas2);

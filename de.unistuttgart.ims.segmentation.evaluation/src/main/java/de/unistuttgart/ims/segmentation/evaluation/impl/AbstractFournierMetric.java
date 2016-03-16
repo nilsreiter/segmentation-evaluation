@@ -11,28 +11,24 @@ public abstract class AbstractFournierMetric implements FournierMetric {
 
 	int windowSize = 2;
 	protected TranspositionWeightingFunction tpFunction = new TranspositionWeightingFunction() {
-		@Override
+
 		public double getWeight(Transposition tp) {
 			return tp.getMass();
 		}
 	};
 
-	@Override
 	public int getWindowSize() {
 		return windowSize;
 	}
 
-	@Override
 	public void setWindowSize(int windowSize) {
 		this.windowSize = windowSize;
 	}
 
-	@Override
 	public void setTranspositionPenaltyFunction(TranspositionWeightingFunction tpf) {
 		tpFunction = tpf;
 	}
 
-	@Override
 	public TranspositionWeightingFunction getTranspositionPenaltyFunction() {
 		return tpFunction;
 	}
@@ -113,7 +109,6 @@ public abstract class AbstractFournierMetric implements FournierMetric {
 			target = s2;
 		}
 
-		@Override
 		public int getMass() {
 			return Math.max(source, target) - Math.min(target, source);
 		}
@@ -123,12 +118,10 @@ public abstract class AbstractFournierMetric implements FournierMetric {
 			return "(" + source + "," + target + ")";
 		}
 
-		@Override
 		public int getSource() {
 			return source;
 		}
 
-		@Override
 		public int getTarget() {
 			return target;
 		}

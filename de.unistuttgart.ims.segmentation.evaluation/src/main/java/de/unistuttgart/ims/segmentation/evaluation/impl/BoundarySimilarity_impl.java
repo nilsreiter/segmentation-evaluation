@@ -19,12 +19,10 @@ public class BoundarySimilarity_impl extends AbstractFournierMetric implements B
 		boundaryType = annotationType;
 	}
 
-	@Override
 	public boolean init(JCas gold) {
 		return true;
 	}
 
-	@Override
 	public double score(JCas gold, JCas silver) {
 		final int[] ms1 = SegmentationUtil.getMassTuple(gold, boundaryType);
 		final int[] ms2 = SegmentationUtil.getMassTuple(silver, boundaryType);
@@ -44,7 +42,7 @@ public class BoundarySimilarity_impl extends AbstractFournierMetric implements B
 
 		for (final Transposition tp : potTranspositions.keySet()) {
 			substOperations.removeIf(new Predicate<Substitution>() {
-				@Override
+
 				public boolean test(Substitution t) {
 					return ((tp.getTarget() == t.getPosition()) || (tp.getSource() == t.getPosition()));
 				}
@@ -65,7 +63,6 @@ public class BoundarySimilarity_impl extends AbstractFournierMetric implements B
 		return d / getWindowSize();
 	}
 
-	@Override
 	public Map<String, Double> scores(JCas gold, JCas silver) {
 
 		final Map<String, Double> r = new HashMap<String, Double>();

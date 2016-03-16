@@ -11,14 +11,12 @@ import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 public class ScottPi_impl implements ScottPi {
 	Metric observedAgreementMetric;
 
-	@Override
 	public double agr(JCas... jcas) {
 		final double obs = getObservedAgreement(jcas);
 		final double chc = getChanceAgreement(jcas);
 		return (obs - chc) / (1 - chc);
 	}
 
-	@Override
 	public double getChanceAgreement(JCas... jcas) {
 		final int mass = JCasUtil.select(jcas[0], SegmentationUnit.class).size();
 		int n = 0, z = 0;
@@ -29,7 +27,6 @@ public class ScottPi_impl implements ScottPi {
 		return z / (jcas.length * (double) n);
 	}
 
-	@Override
 	public double getObservedAgreement(JCas... jcas) {
 		final int mass = JCasUtil.select(jcas[0], SegmentationUnit.class).size();
 		int z = 0;
@@ -46,13 +43,11 @@ public class ScottPi_impl implements ScottPi {
 		return z / (double) n;
 	}
 
-	@Override
 	public void setObservedAgreementMetric(Metric metric) {
 		observedAgreementMetric = metric;
 
 	}
 
-	@Override
 	public Metric getObservedAgreementMetric() {
 		return observedAgreementMetric;
 	}

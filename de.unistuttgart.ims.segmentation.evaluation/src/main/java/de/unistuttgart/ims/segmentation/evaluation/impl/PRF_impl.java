@@ -31,7 +31,6 @@ public class PRF_impl implements PRF {
 		annotationClass = annoClass;
 	}
 
-	@Override
 	public boolean init(JCas gold) {
 		try {
 			feature = gold.getRequiredFeature(gold.getTypeSystem().getType(annotationClass.getCanonicalName()),
@@ -47,7 +46,6 @@ public class PRF_impl implements PRF {
 		return JCasUtil.exists(gold, annotationClass);
 	}
 
-	@Override
 	public Map<String, Double> scores(JCas gold, JCas silver) {
 		final int goldNumber = JCasUtil.select(gold, annotationClass).size();
 		final int silverNumber = JCasUtil.select(silver, annotationClass).size();
@@ -113,7 +111,6 @@ public class PRF_impl implements PRF {
 		return featureName;
 	}
 
-	@Override
 	public void setFeatureName(String featureName) {
 		this.featureName = featureName;
 	}
@@ -122,17 +119,14 @@ public class PRF_impl implements PRF {
 		return annotationClass;
 	}
 
-	@Override
 	public void setAnnotationClass(Class<? extends Annotation> annotationClass) {
 		this.annotationClass = annotationClass;
 	}
 
-	@Override
 	public Average getAverage() {
 		return average;
 	}
 
-	@Override
 	public void setAverage(Average average) {
 		this.average = average;
 	}
@@ -145,17 +139,14 @@ public class PRF_impl implements PRF {
 		return i;
 	}
 
-	@Override
 	public boolean isClassWise() {
 		return classWise;
 	}
 
-	@Override
 	public void setClassWise(boolean classWise) {
 		this.classWise = classWise;
 	}
 
-	@Override
 	public double score(JCas gold, JCas silver) {
 		return scores(gold, silver).get("_" + Strings.FSCORE);
 	}
