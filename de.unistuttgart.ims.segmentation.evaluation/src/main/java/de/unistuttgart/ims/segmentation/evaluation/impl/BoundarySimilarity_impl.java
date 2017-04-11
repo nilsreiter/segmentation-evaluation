@@ -8,8 +8,8 @@ import com.google.common.base.Function;
 
 import de.unistuttgart.ims.commons.Counter;
 import de.unistuttgart.ims.segmentation.evaluation.BoundarySimilarity;
-import de.unistuttgart.ims.segmentation.evaluation.Transposition;
 import de.unistuttgart.ims.segmentation.evaluation.impl.FournierUtil.Substitution;
+import de.unistuttgart.ims.segmentation.evaluation.impl.FournierUtil.Transposition;
 import de.unistuttgart.ims.segmentation.evaluation.util.SegmentationUtil;
 
 public class BoundarySimilarity_impl implements BoundarySimilarity {

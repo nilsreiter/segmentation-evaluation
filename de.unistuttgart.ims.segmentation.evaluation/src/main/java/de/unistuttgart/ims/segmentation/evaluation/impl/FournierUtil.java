@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.unistuttgart.ims.commons.Counter;
-import de.unistuttgart.ims.segmentation.evaluation.Transposition;
 
 public class FournierUtil {
 
@@ -29,7 +28,7 @@ public class FournierUtil {
 			if (iterator.hasNext()) {
 				final Substitution i = iterator.next();
 				if (((i.getPosition() - j.getPosition()) < windowSize) && (i.getSequence() != j.getSequence())) {
-					potTranspositions.add(new Transposition_impl(j.getPosition(), i.getPosition()),
+					potTranspositions.add(new Transposition(j.getPosition(), i.getPosition()),
 							i.getPosition() - j.getPosition());
 				}
 			}
@@ -39,15 +38,14 @@ public class FournierUtil {
 		return potTranspositions;
 	}
 
-	public static class Transposition_impl implements Transposition {
+	public static class Transposition {
 		int source, target;
 
-		public Transposition_impl(int s1, int s2) {
+		public Transposition(int s1, int s2) {
 			source = s1;
 			target = s2;
 		}
 
-		@Override
 		public int getMass() {
 			return Math.max(source, target) - Math.min(target, source);
 		}
@@ -57,12 +55,10 @@ public class FournierUtil {
 			return "(" + source + "," + target + ")";
 		}
 
-		@Override
 		public int getSource() {
 			return source;
 		}
 
-		@Override
 		public int getTarget() {
 			return target;
 		}
