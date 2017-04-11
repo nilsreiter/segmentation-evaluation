@@ -1,5 +1,6 @@
 package de.unistuttgart.ims.segmentation.evaluation;
 
+import de.unistuttgart.ims.segmentation.evaluation.impl.BoundarySimilarity_impl;
 import de.unistuttgart.ims.segmentation.evaluation.impl.Pk_impl;
 import de.unistuttgart.ims.segmentation.evaluation.impl.WindowDifference_impl;
 
@@ -11,6 +12,8 @@ public class MetricFactory {
 			return (T) new Pk_impl();
 		if (mClass.equals(WindowDifference.class))
 			return (T) new WindowDifference_impl();
+		if (mClass.equals(BoundarySimilarity.class))
+			return (T) new BoundarySimilarity_impl();
 		return null;
 
 	}
