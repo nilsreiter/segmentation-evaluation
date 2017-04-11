@@ -68,7 +68,7 @@
 			<dependency>
 				<groupId>de.unistuttgart.ims</groupId>
 				<artifactId>uimautil</artifactId>
-				<version>0.4.1-SNAPSHOT</version>
+				<version>0.5.6</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -149,5 +149,6 @@
 	<modules>
 		<module>de.unistuttgart.ims.segmentation.api</module>
 		<module>de.unistuttgart.ims.segmentation.evaluation</module>
+		<module>de.unistuttgart.ims.segmentation.uima</module>
 	</modules>
 </project>
