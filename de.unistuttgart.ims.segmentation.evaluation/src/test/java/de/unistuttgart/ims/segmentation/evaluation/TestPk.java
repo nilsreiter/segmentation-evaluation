@@ -14,32 +14,32 @@ public class TestPk {
 
 		a = new int[] { 4, 3, 1 };
 		b = new int[] { 4, 3, 1 };
-		assertEquals(0, pk.score(a, b, true), range);
+		assertEquals(0, pk.score(a, b), range);
 
 		a = new int[] { 13 };
 		b = new int[] { 4, 4, 5 };
-		assertEquals(1.0, pk.score(a, b, true), range);
-		assertEquals(0.3636, pk.score(b, a, true), range);
+		assertEquals(1.0, pk.score(a, b), range);
+		assertEquals(0.3636, pk.score(b, a), range);
 
 		a = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 		b = new int[] { 4, 4, 5 };
-		assertEquals(0.6363, pk.score(a, b, true), range);
-		assertEquals(0.6363, pk.score(b, a, true), range);
+		assertEquals(0.6363, pk.score(a, b), range);
+		assertEquals(0.6363, pk.score(b, a), range);
 
 		a = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 		b = new int[] { 13 };
-		assertEquals(1.0, pk.score(a, b, true), range);
-		assertEquals(1.0, pk.score(b, a, true), range);
+		assertEquals(1.0, pk.score(a, b), range);
+		assertEquals(1.0, pk.score(b, a), range);
 
 		a = new int[] { 4, 4, 5 };
 		b = new int[] { 5, 1, 2, 5 };
-		assertEquals(0.2727, pk.score(a, b, true), range);
-		assertEquals(0.2727, pk.score(b, a, true), range);
+		assertEquals(0.2727, pk.score(a, b), range);
+		assertEquals(0.2727, pk.score(b, a), range);
 
 		a = new int[] { 5, 3, 5 };
 		b = new int[] { 5, 1, 2, 5 };
-		assertEquals(0.0909, pk.score(a, b, true), range);
-		assertEquals(0.0909, pk.score(b, a, true), range);
+		assertEquals(0.0909, pk.score(a, b), range);
+		assertEquals(0.0909, pk.score(b, a), range);
 
 	}
 
