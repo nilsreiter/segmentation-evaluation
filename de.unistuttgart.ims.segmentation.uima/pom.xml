@@ -16,7 +16,8 @@
 			<groupId>de.unistuttgart.ims</groupId>
 			<artifactId>segmentation.api</artifactId>
 			<version>0.2</version>
-		</dependency>
+			<scope>test</scope>
+  			</dependency>
 				<dependency>
 			<groupId>org.apache.uima</groupId>
 			<artifactId>uimafit-core</artifactId>
