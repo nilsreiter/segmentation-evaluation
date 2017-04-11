@@ -18,6 +18,7 @@ import de.unistuttgart.ims.commons.Counter;
 import de.unistuttgart.ims.segmentation.uima.evaluation.PRF;
 import de.unistuttgart.ims.segmentation.uima.evaluation.Strings;
 
+@Deprecated
 public class PRF_impl implements PRF {
 
 	Logger logger = LoggerFactory.getLogger(getClass());

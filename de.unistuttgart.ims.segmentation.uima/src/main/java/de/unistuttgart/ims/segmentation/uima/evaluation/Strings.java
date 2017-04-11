@@ -1,5 +1,6 @@
 package de.unistuttgart.ims.segmentation.uima.evaluation;
 
+@Deprecated
 public class Strings {
 	public static final String PRECISION = "Precision";
 	public static final String RECALL = "Recall";

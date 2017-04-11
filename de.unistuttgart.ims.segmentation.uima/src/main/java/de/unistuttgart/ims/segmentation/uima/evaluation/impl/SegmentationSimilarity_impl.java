@@ -14,6 +14,7 @@ import de.unistuttgart.ims.commons.Counter;
 import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 import de.unistuttgart.ims.segmentation.uima.evaluation.SegmentationSimilarity;
 
+@Deprecated
 public class SegmentationSimilarity_impl extends AbstractFournierMetric implements SegmentationSimilarity {
 	Class<? extends Annotation> boundaryType;
 

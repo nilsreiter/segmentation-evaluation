@@ -1,5 +1,6 @@
 package de.unistuttgart.ims.segmentation.uima.evaluation;
 
+@Deprecated
 public interface FournierMetric extends Metric {
 
 	void setTranspositionPenaltyFunction(TranspositionWeightingFunction tpf);

@@ -2,6 +2,7 @@ package de.unistuttgart.ims.segmentation.uima.evaluation;
 
 import org.apache.uima.jcas.tcas.Annotation;
 
+@Deprecated
 public interface PRF extends Metric {
 	enum Average {
 		Micro, Macro

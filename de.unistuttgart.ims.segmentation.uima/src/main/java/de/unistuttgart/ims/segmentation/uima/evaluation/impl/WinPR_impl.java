@@ -2,6 +2,7 @@ package de.unistuttgart.ims.segmentation.uima.evaluation.impl;
 
 import java.util.LinkedList;
 
+@Deprecated
 class WinPR_impl {
 	int window_size = 1;
 
@@ -52,15 +53,13 @@ class WinPR_impl {
 	 *            be evaluated- as described above
 	 * @return a WinPR object representing the resulting confusion matrix
 	 */
-	static public WinPR_impl calculateWinPR(LinkedList<Integer> gold,
-			LinkedList<Integer> hypothesis) {
+	static public WinPR_impl calculateWinPR(LinkedList<Integer> gold, LinkedList<Integer> hypothesis) {
 		assert (gold.getLast() == hypothesis.getLast());
 		int window_size = windowSize(gold);
 		return calculateWinPR(gold, hypothesis, window_size);
 	}
 
-	static public WinPR_impl calculateWinPR(LinkedList<Integer> gold,
-			LinkedList<Integer> hypothesis, int window_size) {
+	static public WinPR_impl calculateWinPR(LinkedList<Integer> gold, LinkedList<Integer> hypothesis, int window_size) {
 		assert (gold.getLast() == hypothesis.getLast());
 
 		WinPR_impl winDiff = new WinPR_impl();
@@ -103,11 +102,9 @@ class WinPR_impl {
 		return winDiff;
 	}
 
-	static private void updateWinPR(int gold_count, int hypo_count,
-			int window_size, WinPR_impl winDiff) {
+	static private void updateWinPR(int gold_count, int hypo_count, int window_size, WinPR_impl winDiff) {
 		winDiff.tp += Math.min(gold_count, hypo_count);
-		winDiff.tn +=
-				Math.max(0, window_size - Math.max(gold_count, hypo_count));
+		winDiff.tn += Math.max(0, window_size - Math.max(gold_count, hypo_count));
 
 		if (hypo_count - gold_count > 0)
 			winDiff.fp += hypo_count - gold_count;
@@ -135,8 +132,8 @@ class WinPR_impl {
 	 *            - window size
 	 * @return
 	 */
-	static public double calculateWindowDiff(LinkedList<Integer> gold,
-			LinkedList<Integer> hypothesis, int window_size) {
+	static public double calculateWindowDiff(LinkedList<Integer> gold, LinkedList<Integer> hypothesis,
+			int window_size) {
 		int start = 0;
 		int last = gold.getLast();
 		int end = last + 1;
@@ -169,7 +166,8 @@ class WinPR_impl {
 				}
 			}
 
-			if (gold_count != hypo_count) incorrect++;
+			if (gold_count != hypo_count)
+				incorrect++;
 			total++;
 		}
 		return (double) incorrect / (double) total;
@@ -211,12 +209,10 @@ class WinPR_impl {
 	}
 
 	public static void main(String args[]) {
-		System.out
-				.println("Hypothetical segmentation of A B C + D E F G H + I J");
+		System.out.println("Hypothetical segmentation of A B C + D E F G H + I J");
 		// Hypothetical segmentation of A B C + D E F G H + I J where + is a
 		// boundary and letters are content units (sentences)
-		LinkedList<Integer> hypothetical_segmentation =
-				new LinkedList<Integer>();
+		LinkedList<Integer> hypothetical_segmentation = new LinkedList<Integer>();
 		hypothetical_segmentation.add(2); // between CD
 		hypothetical_segmentation.add(7); // between HI
 		hypothetical_segmentation.add(9); // End of segmentation
@@ -228,33 +224,24 @@ class WinPR_impl {
 		true_segmentation.add(7); // between HI
 		true_segmentation.add(9); // End of segmentation
 
-		double WindowDiff =
-				WinPR_impl.calculateWindowDiff(true_segmentation,
-						hypothetical_segmentation, 1);
+		double WindowDiff = WinPR_impl.calculateWindowDiff(true_segmentation, hypothetical_segmentation, 1);
 		System.out.println("k = 1\nWindowDiff = " + WindowDiff);
 
-		WinPR_impl winPR =
-				WinPR_impl.calculateWinPR(true_segmentation,
-						hypothetical_segmentation, 1);
+		WinPR_impl winPR = WinPR_impl.calculateWinPR(true_segmentation, hypothetical_segmentation, 1);
 		System.out.println(winPR.toString());
 
 		// For k = 2
 
-		WindowDiff =
-				WinPR_impl.calculateWindowDiff(true_segmentation,
-						hypothetical_segmentation, 2);
+		WindowDiff = WinPR_impl.calculateWindowDiff(true_segmentation, hypothetical_segmentation, 2);
 		System.out.println("k = 2\nWindowDiff = " + WindowDiff);
 
-		winPR =
-				WinPR_impl.calculateWinPR(true_segmentation,
-						hypothetical_segmentation, 2);
+		winPR = WinPR_impl.calculateWinPR(true_segmentation, hypothetical_segmentation, 2);
 		System.out.println(winPR.toString());
 
 		// Another example
 		System.out.println("");
 		System.out.println("True segmentation: A B C D E + F G H + I J");
-		System.out
-				.println("Hypothetical segmentation of A B C + D E + F G H + I + J ");
+		System.out.println("Hypothetical segmentation of A B C + D E + F G H + I + J ");
 		// Hypothetical segmentation of A B C + D E + F G H + I + J
 		hypothetical_segmentation = new LinkedList<Integer>();
 		hypothetical_segmentation.add(2); // between CD
@@ -263,14 +250,10 @@ class WinPR_impl {
 		hypothetical_segmentation.add(8); // between IJ
 		hypothetical_segmentation.add(9); // End of segmentation
 
-		WindowDiff =
-				WinPR_impl.calculateWindowDiff(true_segmentation,
-						hypothetical_segmentation, 2);
+		WindowDiff = WinPR_impl.calculateWindowDiff(true_segmentation, hypothetical_segmentation, 2);
 		System.out.println("k = 2\nWindowDiff = " + WindowDiff);
 
-		winPR =
-				WinPR_impl.calculateWinPR(true_segmentation,
-						hypothetical_segmentation, 2);
+		winPR = WinPR_impl.calculateWinPR(true_segmentation, hypothetical_segmentation, 2);
 		System.out.println(winPR.toString());
 	}
 }

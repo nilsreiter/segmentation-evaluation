@@ -17,6 +17,7 @@ import de.unistuttgart.ims.commons.Counter;
 import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 import de.unistuttgart.ims.segmentation.uima.evaluation.util.SegmentBoundaryAnnotator;
 
+@Deprecated
 public class SegmentationUtil {
 
 	public static int[] getMassTuple(JCas jcas, Class<? extends Annotation> boundaryType) {

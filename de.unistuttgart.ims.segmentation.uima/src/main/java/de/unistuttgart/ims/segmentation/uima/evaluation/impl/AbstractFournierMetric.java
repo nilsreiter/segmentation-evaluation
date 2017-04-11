@@ -7,6 +7,7 @@ import java.util.List;
 import de.unistuttgart.ims.commons.Counter;
 import de.unistuttgart.ims.segmentation.uima.evaluation.FournierMetric;
 
+@Deprecated
 public abstract class AbstractFournierMetric implements FournierMetric {
 
 	int windowSize = 2;

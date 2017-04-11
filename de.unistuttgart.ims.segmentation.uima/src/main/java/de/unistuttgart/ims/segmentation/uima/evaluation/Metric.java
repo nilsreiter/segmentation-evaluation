@@ -10,6 +10,7 @@ import org.apache.uima.jcas.JCas;
  * @author reiterns
  *
  */
+@Deprecated
 public interface Metric {
 
 	/**

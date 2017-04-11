@@ -12,6 +12,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 import de.unistuttgart.ims.commons.Counter;
 import de.unistuttgart.ims.segmentation.uima.evaluation.BoundarySimilarity;
 
+@Deprecated
 public class BoundarySimilarity_impl extends AbstractFournierMetric implements BoundarySimilarity {
 	Class<? extends Annotation> boundaryType;
 

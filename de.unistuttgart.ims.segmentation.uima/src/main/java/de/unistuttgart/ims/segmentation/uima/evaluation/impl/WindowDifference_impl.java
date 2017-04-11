@@ -10,6 +10,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 import de.unistuttgart.ims.segmentation.uima.evaluation.WindowDifference;
 
+@Deprecated
 public class WindowDifference_impl implements WindowDifference {
 	Class<? extends Annotation> annoType;
 

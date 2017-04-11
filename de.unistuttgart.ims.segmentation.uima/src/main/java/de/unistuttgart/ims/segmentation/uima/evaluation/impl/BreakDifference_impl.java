@@ -11,6 +11,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 import de.unistuttgart.ims.segmentation.type.SegmentBoundary;
 import de.unistuttgart.ims.segmentation.uima.evaluation.BreakDifference;
 
+@Deprecated
 public class BreakDifference_impl implements BreakDifference {
 
 	Class<? extends Annotation> annoType;
