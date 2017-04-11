@@ -18,6 +18,16 @@ public class FournierUtil {
 		return substOperations;
 	}
 
+	public static List<Substitution> getPotentialSubstitions2(int[][][] boundaries) {
+		final List<Substitution> substOperations = new LinkedList<Substitution>();
+		for (int i = 0; i < boundaries[0].length; i++) {
+			if (boundaries[0][i] != boundaries[1][i]) {
+				substOperations.add(new Substitution(i, 0));
+			}
+		}
+		return substOperations;
+	}
+
 	public static Counter<Transposition> getTranspositions2(List<Substitution> substOperations, int windowSize) {
 		final Counter<Transposition> potTranspositions = new Counter<Transposition>();
 
