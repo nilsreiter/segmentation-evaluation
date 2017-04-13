@@ -1,8 +1,12 @@
 package de.unistuttgart.ims.segmentation.evaluation.impl;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
+import com.google.common.collect.Sets;
 
 import de.unistuttgart.ims.commons.Counter;
 
@@ -46,6 +50,32 @@ public class FournierUtil {
 		}
 
 		return potTranspositions;
+	}
+
+	public static <T> List<Set<T>> array2SetList(T... ts) {
+		List<Set<T>> l = new ArrayList<Set<T>>(ts.length);
+		for (int i = 0; i < ts.length; i++) {
+			T o = ts[i];
+			if (o != null) {
+				l.add(i, Sets.newHashSet(o));
+			} else {
+				l.add(i, Sets.newHashSet());
+			}
+		}
+		return l;
+	}
+
+	public static <T> List<Set<T>> array2SetList(T[]... ts) {
+		List<Set<T>> l = new ArrayList<Set<T>>(ts.length);
+		for (int i = 0; i < ts.length; i++) {
+			T[] o = ts[i];
+			if (o != null) {
+				l.add(i, Sets.newHashSet(o));
+			} else {
+				l.add(i, Sets.newHashSet());
+			}
+		}
+		return l;
 	}
 
 	public static class Transposition {
