@@ -12,7 +12,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import de.unistuttgart.ims.segmentation.type.SegmentBoundary;
 
-public class SegmentBoundaryAnnotator extends JCasAnnotator_ImplBase {
+public class ContinuousSegmentBoundaryAnnotator extends JCasAnnotator_ImplBase {
 
 	public static final String PARAM_ANNOTATION_TYPE = "Annotation Type";
 

@@ -15,7 +15,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import de.unistuttgart.ims.commons.Counter;
 import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
-import de.unistuttgart.ims.segmentation.uima.evaluation.util.SegmentBoundaryAnnotator;
+import de.unistuttgart.ims.segmentation.uima.evaluation.util.ContinuousSegmentBoundaryAnnotator;
 
 @Deprecated
 public class SegmentationUtil {
@@ -109,8 +109,8 @@ public class SegmentationUtil {
 
 	public static JCas segment2boundary(JCas jcas, Class<? extends Annotation> segmentClass)
 			throws AnalysisEngineProcessException, ResourceInitializationException {
-		SimplePipeline.runPipeline(jcas, AnalysisEngineFactory.createEngineDescription(SegmentBoundaryAnnotator.class,
-				SegmentBoundaryAnnotator.PARAM_ANNOTATION_TYPE, segmentClass.getCanonicalName()));
+		SimplePipeline.runPipeline(jcas, AnalysisEngineFactory.createEngineDescription(ContinuousSegmentBoundaryAnnotator.class,
+				ContinuousSegmentBoundaryAnnotator.PARAM_ANNOTATION_TYPE, segmentClass.getCanonicalName()));
 		return jcas;
 
 	}
