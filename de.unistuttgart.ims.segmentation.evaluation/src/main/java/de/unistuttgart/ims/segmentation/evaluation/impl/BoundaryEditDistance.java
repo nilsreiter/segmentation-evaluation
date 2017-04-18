@@ -18,7 +18,9 @@ import org.apache.commons.math3.util.Pair;
 
 import com.google.common.collect.Sets;
 
-public class BoundaryEditDistance<T> {
+import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsMetric;
+
+public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 	public class Transposition {
 		public Transposition(int from, int to, T type) {
 			super();
@@ -63,18 +65,6 @@ public class BoundaryEditDistance<T> {
 	MultiValuedMap<Integer, Transposition> tpIndex = new HashSetValuedHashMap<Integer, Transposition>();
 	MultiValuedMap<Integer, T> final_additions = new HashSetValuedHashMap<Integer, T>();
 	MultiValuedMap<Integer, T> final_subsitutions = new HashSetValuedHashMap<Integer, T>();
-
-	public BoundaryEditDistance() {
-
-	}
-
-	public BoundaryEditDistance(List<Set<T>> gold, List<Set<T>> silver, int windowSize) {
-		this.gold = gold;
-		this.silver = silver;
-		this.windowSize = windowSize;
-
-		calculate();
-	}
 
 	protected void calculate() {
 		deletions = new ArrayList<Set<T>>(gold.size());
@@ -243,9 +233,28 @@ public class BoundaryEditDistance<T> {
 	}
 
 	public static <T> int distance(List<Set<T>> a, List<Set<T>> b, int w) {
-		BoundaryEditDistance<T> bes = new BoundaryEditDistance<T>(a, b, w);
-		int r = bes.getNumberOfEdits();
-		bes = null;
-		return r;
+		BoundaryEditDistance<T> bes = new BoundaryEditDistance<T>();
+		return (int) bes.score(a, b, w);
+	}
+
+	@Override
+	public double score(List<Set<T>> gold, List<Set<T>> silver, int windowSize) {
+		this.init();
+		this.gold = gold;
+		this.silver = silver;
+		this.windowSize = windowSize;
+
+		calculate();
+		return getNumberOfEdits();
+	}
+
+	private void init() {
+		matches = new HashSet<Integer>();
+		List<Set<T>> deletions, additions, substitutions;
+		mismatches = new HashMap<Integer, Integer>();
+		transpositions = new HashSet<Transposition>();
+		tpIndex = new HashSetValuedHashMap<Integer, Transposition>();
+		final_additions = new HashSetValuedHashMap<Integer, T>();
+		final_subsitutions = new HashSetValuedHashMap<Integer, T>();
 	}
 }

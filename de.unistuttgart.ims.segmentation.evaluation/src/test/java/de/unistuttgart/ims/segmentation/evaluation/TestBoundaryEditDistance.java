@@ -21,38 +21,38 @@ public class TestBoundaryEditDistance {
 				Sets.newHashSet(), Sets.newHashSet(2));
 		List<Set<Integer>> silver = Arrays.asList(Sets.newHashSet(1), Sets.newHashSet(), Sets.newHashSet(),
 				Sets.newHashSet(), Sets.newHashSet(1));
-		BoundaryEditDistance<Integer> bs;
+		BoundaryEditDistance<Integer> bs = new BoundaryEditDistance<Integer>();
 
-		bs = new BoundaryEditDistance<Integer>(gold, gold, 2);
+		bs.score(gold, gold, 2);
 		assertEquals(0, bs.getNumberOfSubstitutions());
 		assertEquals(0, bs.getNumberOfAdditions());
 		assertEquals(0, bs.getNumberOfTranspositions());
 
-		bs = new BoundaryEditDistance<Integer>(gold, silver, 2);
+		bs.score(gold, silver, 2);
 		assertEquals(1, bs.getNumberOfSubstitutions());
 		assertEquals(0, bs.getNumberOfAdditions());
 		assertEquals(0, bs.getNumberOfTranspositions());
 
 		silver = FournierUtil.array2SetList(1, null, null, 2, 1);
-		bs = new BoundaryEditDistance<Integer>(gold, silver, 2);
+		bs.score(gold, silver, 2);
 		assertEquals(0, bs.getNumberOfSubstitutions());
 		assertEquals(1, bs.getNumberOfAdditions());
 		assertEquals(1, bs.getNumberOfTranspositions());
 
 		silver = FournierUtil.array2SetList(1, null, null, null, null);
-		bs = new BoundaryEditDistance<Integer>(gold, silver, 2);
+		bs.score(gold, silver, 2);
 		assertEquals(0, bs.getNumberOfSubstitutions());
 		assertEquals(1, bs.getNumberOfAdditions());
 		assertEquals(0, bs.getNumberOfTranspositions());
 
 		silver = FournierUtil.array2SetList(new Integer[] { 1, 2 }, null, null, null, null);
-		bs = new BoundaryEditDistance<Integer>(gold, silver, 2);
+		bs.score(gold, silver, 2);
 		assertEquals(0, bs.getNumberOfSubstitutions());
 		assertEquals(2, bs.getNumberOfAdditions());
 		assertEquals(0, bs.getNumberOfTranspositions());
 
 		silver = FournierUtil.array2SetList(new Integer[] { 1, 2 }, null, null, new Integer[] { 2, 3 }, null);
-		bs = new BoundaryEditDistance<Integer>(gold, silver, 2);
+		bs.score(gold, silver, 2);
 		assertEquals(0, bs.getNumberOfSubstitutions());
 		assertEquals(2, bs.getNumberOfAdditions());
 		assertEquals(1, bs.getNumberOfTranspositions());
