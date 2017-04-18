@@ -1,8 +1,6 @@
 package de.unistuttgart.ims.segmentation.evaluation.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -15,6 +13,7 @@ import org.apache.commons.collections4.iterators.PermutationIterator;
 import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
 import org.apache.commons.math3.util.Pair;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsMetric;
@@ -23,18 +22,19 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 	List<Set<T>> gold, silver;
 	int windowSize;
 
-	Set<Integer> matches = new HashSet<Integer>();
 	List<Set<T>> deletions, additions, substitutions;
+	Map<Integer, Set<T>> matches;
 	Map<Integer, Integer> mismatches = new HashMap<Integer, Integer>();
 	Set<Transposition<T>> transpositions = new HashSet<Transposition<T>>();
 	MultiValuedMap<Integer, Transposition<T>> tpIndex = new HashSetValuedHashMap<Integer, Transposition<T>>();
 	MultiValuedMap<Integer, T> final_additions = new HashSetValuedHashMap<Integer, T>();
-	MultiValuedMap<Integer, T> final_subsitutions = new HashSetValuedHashMap<Integer, T>();
+	MultiValuedMap<Integer, Substitution<T>> final_subsitutions = new HashSetValuedHashMap<Integer, Substitution<T>>();
 
 	protected void calculate() {
 		deletions = new ArrayList<Set<T>>(gold.size());
 		additions = new ArrayList<Set<T>>(gold.size());
 		substitutions = new ArrayList<Set<T>>(gold.size());
+		matches = new HashMap<Integer, Set<T>>();
 
 		// calculate optional set edits
 		for (int i = 0; i < gold.size(); i++) {
@@ -43,6 +43,9 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 			additions.add(i, Sets.newHashSet(Sets.difference(gold_set, silver_set)));
 			deletions.add(i, Sets.newHashSet(Sets.difference(silver_set, gold_set)));
 			substitutions.add(i, Sets.newHashSet(Sets.symmetricDifference(gold_set, silver_set)));
+			Set<T> isect = Sets.newHashSet(Sets.intersection(gold_set, silver_set));
+			if (!isect.isEmpty())
+				matches.put(i, isect);
 		}
 
 		// calculate transpositions
@@ -76,12 +79,18 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 		}
 
 		for (int i = 0; i < additions.size(); i++) {
-			if (!additions.get(i).isEmpty() || !deletions.get(i).isEmpty() || !substitutions.get(i).isEmpty()) {
-				List<Set<T>> ass = additions_substitutions_set(substitutions.get(i), additions.get(i),
-						deletions.get(i));
-				final_additions.putAll(i, ass.get(0));
-				final_subsitutions.putAll(i, ass.get(1));
+
+			Pair<List<T>, List<T>> Osub = additions_substitutions_set(substitutions.get(i), additions.get(i),
+					deletions.get(i));
+			Set<T> ae = new HashSet<T>();
+			ae.addAll(substitutions.get(i));
+			for (int k = 0; k < Math.min(Osub.getFirst().size(), Osub.getSecond().size()); k++) {
+				ae.remove(Osub.getFirst().get(k));
+				ae.remove(Osub.getSecond().get(k));
+				final_subsitutions.put(i, new Substitution<T>(Osub.getFirst().get(k), Osub.getSecond().get(k)));
+
 			}
+			final_additions.putAll(i, ae);
 
 		}
 
@@ -93,10 +102,9 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 		return new int[] { add, sub };
 	}
 
-	public List<Set<T>> additions_substitutions_set(Set<T> d, Set<T> a, Set<T> b) {
+	public Pair<List<T>, List<T>> additions_substitutions_set(Set<T> d, Set<T> a, Set<T> b) {
 		int delta = -1;
-		Set<Pair<Collection<T>, Collection<T>>> Osub = new HashSet<Pair<Collection<T>, Collection<T>>>();
-		Set<T> de = new HashSet<T>();
+		Pair<List<T>, List<T>> Osub = new Pair<List<T>, List<T>>(Lists.newArrayList(), Lists.newArrayList());
 		Iterator<List<T>> a_iter = new PermutationIterator<T>(a);
 		while (a_iter.hasNext()) {
 			Iterator<List<T>> b_iter = new PermutationIterator<T>(b);
@@ -109,23 +117,14 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 						delta_p += Math.abs(ai.hashCode() - bi.hashCode());
 						if (delta_p < delta || delta == -1) {
 							delta = delta_p;
-							Osub.add(new Pair<Collection<T>, Collection<T>>(pa, pb));
+							Osub = new Pair<List<T>, List<T>>(pa, pb);
 						}
 					}
 				}
 			}
 		}
-		for (Pair<Collection<T>, Collection<T>> p : Osub) {
-			de.addAll(p.getFirst());
-			de.addAll(p.getSecond());
-		}
-		Set<T> ae = d;
-		ae = Sets.difference(ae, de);
+		return Osub;
 
-		// System.out.println(ae);
-		// System.out.println(de);
-
-		return Arrays.asList(ae, de);
 	}
 
 	protected boolean has_substitutions(int lower, int upper, T t) {
@@ -157,7 +156,8 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 		b.append("transpositions = ").append(transpositions).append("\n");
 		b.append("additions = ").append(final_additions).append("\n");
 		b.append("sub = ").append(this.final_subsitutions).append("\n");
-		b.append("edits = ").append(this.getNumberOfEdits());
+		b.append("edits = ").append(this.getNumberOfEdits()).append("\n");
+		b.append("matches = ").append(this.getMatches()).append("\n");
 		return b.toString();
 	}
 
@@ -165,7 +165,7 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 		return final_additions;
 	}
 
-	public MultiValuedMap<Integer, T> getSubsitutions() {
+	public MultiValuedMap<Integer, Substitution<T>> getSubsitutions() {
 		return final_subsitutions;
 	}
 
@@ -174,11 +174,15 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 	}
 
 	public int getNumberOfSubstitutions() {
-		return this.getSubsitutions().keySet().size();
+		return this.getSubsitutions().values().size();
 	}
 
 	public int getNumberOfTranspositions() {
 		return this.transpositions.size();
+	}
+
+	public int getNumberOfMatches() {
+		return this.matches.keySet().size();
 	}
 
 	public int getNumberOfEdits() {
@@ -202,11 +206,18 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 	}
 
 	private void init() {
-		matches = new HashSet<Integer>();
 		mismatches = new HashMap<Integer, Integer>();
 		transpositions = new HashSet<Transposition<T>>();
 		tpIndex = new HashSetValuedHashMap<Integer, Transposition<T>>();
 		final_additions = new HashSetValuedHashMap<Integer, T>();
-		final_subsitutions = new HashSetValuedHashMap<Integer, T>();
+		final_subsitutions = new HashSetValuedHashMap<Integer, Substitution<T>>();
+	}
+
+	public Set<Transposition<T>> getTranspositions() {
+		return transpositions;
+	}
+
+	public Map<Integer, Set<T>> getMatches() {
+		return matches;
 	}
 }
