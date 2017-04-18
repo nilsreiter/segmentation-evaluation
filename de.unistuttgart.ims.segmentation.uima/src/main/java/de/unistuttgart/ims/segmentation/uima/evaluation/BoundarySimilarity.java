@@ -1,6 +1,0 @@
-package de.unistuttgart.ims.segmentation.uima.evaluation;
-
-@Deprecated
-public interface BoundarySimilarity extends FournierMetric {
-
-}
