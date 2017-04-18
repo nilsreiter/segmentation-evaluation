@@ -6,15 +6,15 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 
-import de.unistuttgart.ims.segmentation.evaluation.Metric;
+import de.unistuttgart.ims.segmentation.evaluation.MassStringMetric;
 import de.unistuttgart.ims.segmentation.evaluation.WindowMetric;
 
 public class SimpleSegEval<SEGMENT_ANNOTATION extends Annotation, BASE_ANNOTATION extends Annotation> {
-	Metric metric;
+	MassStringMetric metric;
 	Class<SEGMENT_ANNOTATION> segmentClass;
 	Class<BASE_ANNOTATION> baseClass;
 
-	public SimpleSegEval(Metric metric, Class<SEGMENT_ANNOTATION> segmentClass, Class<BASE_ANNOTATION> baseClass) {
+	public SimpleSegEval(MassStringMetric metric, Class<SEGMENT_ANNOTATION> segmentClass, Class<BASE_ANNOTATION> baseClass) {
 		this.metric = metric;
 		this.segmentClass = segmentClass;
 		this.baseClass = baseClass;

@@ -7,7 +7,7 @@ import de.unistuttgart.ims.segmentation.evaluation.impl.WindowDifference_impl;
 public class MetricFactory {
 
 	@SuppressWarnings("unchecked")
-	public static <T extends Metric> T getMetric(Class<T> mClass) {
+	public static <T extends MassStringMetric> T getMetric(Class<T> mClass) {
 		if (mClass.equals(Pk.class))
 			return (T) new Pk_impl();
 		if (mClass.equals(WindowDifference.class))
