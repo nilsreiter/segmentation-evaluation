@@ -6,9 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.bag.HashBag;
 
-import de.unistuttgart.ims.commons.Counter;
+import com.google.common.collect.Sets;
 
 public class FournierUtil {
 
@@ -32,8 +33,8 @@ public class FournierUtil {
 		return substOperations;
 	}
 
-	public static Counter<Transposition> getTranspositions2(List<Substitution> substOperations, int windowSize) {
-		final Counter<Transposition> potTranspositions = new Counter<Transposition>();
+	public static Bag<Transposition> getTranspositions2(List<Substitution> substOperations, int windowSize) {
+		final Bag<Transposition> potTranspositions = new HashBag<Transposition>();
 
 		// finding possible transpositions
 		final Iterator<Substitution> iterator = substOperations.iterator();

@@ -4,9 +4,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.apache.commons.collections4.Bag;
+
 import com.google.common.base.Function;
 
-import de.unistuttgart.ims.commons.Counter;
 import de.unistuttgart.ims.segmentation.evaluation.BoundarySimilarity;
 import de.unistuttgart.ims.segmentation.evaluation.impl.FournierUtil.Substitution;
 import de.unistuttgart.ims.segmentation.evaluation.impl.FournierUtil.Transposition;
@@ -36,9 +37,9 @@ public class BoundarySimilarity_impl implements BoundarySimilarity {
 		final List<Substitution> substOperations = FournierUtil.getPotentialSubstitions2(b);
 
 		// finding possible transposition operations
-		final Counter<Transposition> potTranspositions = FournierUtil.getTranspositions2(substOperations, windowSize);
+		final Bag<Transposition> potTranspositions = FournierUtil.getTranspositions2(substOperations, windowSize);
 
-		for (final Transposition tp : potTranspositions.keySet()) {
+		for (final Transposition tp : potTranspositions) {
 			substOperations.removeIf(new Predicate<Substitution>() {
 
 				@Override
@@ -48,7 +49,7 @@ public class BoundarySimilarity_impl implements BoundarySimilarity {
 			});
 		}
 
-		final double num = substOperations.size() + getTranspositionsWeight(potTranspositions.keySet(), windowSize);
+		final double num = substOperations.size() + getTranspositionsWeight(potTranspositions, windowSize);
 		final double denom = substOperations.size() + potTranspositions.size() + m;
 
 		return 1 - (num / denom);
