@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.MultiValuedMap;
@@ -21,48 +20,14 @@ import com.google.common.collect.Sets;
 import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsMetric;
 
 public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
-	public class Transposition {
-		public Transposition(int from, int to, T type) {
-			super();
-			this.from = from;
-			this.to = to;
-			this.type = type;
-		}
-
-		int from, to;
-		T type;
-
-		@Override
-		public boolean equals(Object o) {
-			if (!(o instanceof BoundaryEditDistance.Transposition))
-				return false;
-			@SuppressWarnings("unchecked")
-			BoundaryEditDistance<T>.Transposition tp = (BoundaryEditDistance<T>.Transposition) o;
-			return (tp.to == this.to && tp.from == this.from && tp.type.equals(this.type));
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(from, to, type);
-
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder b = new StringBuilder();
-			b.append("(").append(from).append(",").append(to).append(",").append(type).append(')');
-			return b.toString();
-		}
-	}
-
 	List<Set<T>> gold, silver;
 	int windowSize;
 
 	Set<Integer> matches = new HashSet<Integer>();
 	List<Set<T>> deletions, additions, substitutions;
 	Map<Integer, Integer> mismatches = new HashMap<Integer, Integer>();
-	Set<Transposition> transpositions = new HashSet<Transposition>();
-	MultiValuedMap<Integer, Transposition> tpIndex = new HashSetValuedHashMap<Integer, Transposition>();
+	Set<Transposition<T>> transpositions = new HashSet<Transposition<T>>();
+	MultiValuedMap<Integer, Transposition<T>> tpIndex = new HashSetValuedHashMap<Integer, Transposition<T>>();
 	MultiValuedMap<Integer, T> final_additions = new HashSetValuedHashMap<Integer, T>();
 	MultiValuedMap<Integer, T> final_subsitutions = new HashSetValuedHashMap<Integer, T>();
 
@@ -94,7 +59,7 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 				potentialTranspositions = Sets.intersection(potentialTranspositions, d_lower);
 				potentialTranspositions = Sets.intersection(potentialTranspositions, d_upper);
 				for (T d : potentialTranspositions) {
-					Transposition t = new Transposition(lower, upper, d);
+					Transposition<T> t = new Transposition<T>(lower, upper, d);
 					if (!overlaps(lower, upper, t) && !has_substitutions(lower, upper, d)) {
 						transpositions.add(t);
 						tpIndex.put(lower, t);
@@ -175,14 +140,14 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 	}
 
 	protected boolean overlaps(int position, T type) {
-		for (Transposition tp : tpIndex.get(position)) {
+		for (Transposition<T> tp : tpIndex.get(position)) {
 			if (tp.type.equals(type))
 				return true;
 		}
 		return false;
 	}
 
-	protected boolean overlaps(int i, int j, Transposition tp) {
+	protected boolean overlaps(int i, int j, Transposition<T> tp) {
 		return overlaps(i, tp.type) || overlaps(j, tp.type);
 	}
 
@@ -194,18 +159,6 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 		b.append("sub = ").append(this.final_subsitutions).append("\n");
 		b.append("edits = ").append(this.getNumberOfEdits());
 		return b.toString();
-	}
-
-	static class MissError {
-		int sequence, position, type;
-
-		public MissError(int sequence, int position, int type) {
-			super();
-			this.sequence = sequence;
-			this.position = position;
-			this.type = type;
-		}
-
 	}
 
 	public MultiValuedMap<Integer, T> getAdditions() {
@@ -251,8 +204,8 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 	private void init() {
 		matches = new HashSet<Integer>();
 		mismatches = new HashMap<Integer, Integer>();
-		transpositions = new HashSet<Transposition>();
-		tpIndex = new HashSetValuedHashMap<Integer, Transposition>();
+		transpositions = new HashSet<Transposition<T>>();
+		tpIndex = new HashSetValuedHashMap<Integer, Transposition<T>>();
 		final_additions = new HashSetValuedHashMap<Integer, T>();
 		final_subsitutions = new HashSetValuedHashMap<Integer, T>();
 	}

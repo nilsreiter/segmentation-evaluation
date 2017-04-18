@@ -79,6 +79,7 @@ public class FournierUtil {
 		return l;
 	}
 
+	@Deprecated
 	public static class Transposition {
 		int source, target;
 
@@ -105,6 +106,7 @@ public class FournierUtil {
 		}
 	}
 
+	@Deprecated
 	public static class Substitution {
 		int position;
 		int sequence;
