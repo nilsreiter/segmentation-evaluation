@@ -16,6 +16,15 @@ public class Util {
 	public static final String BEGIN = "BEGIN";
 	public static final String END = "END";
 
+	public static <SEGMENT_TYPE extends Annotation> BiFunction<SEGMENT_TYPE, String, String> getFunction() {
+		return new BiFunction<SEGMENT_TYPE, String, String>() {
+
+			public String apply(SEGMENT_TYPE t, String u) {
+				return t.getType().getShortName() + "-" + u;
+			}
+		};
+	}
+
 	public static <BASE_TYPE extends Annotation, SEGMENT_TYPE extends Annotation, BOUNDARY_TYPE> List<Set<BOUNDARY_TYPE>> getBoundarySetSequence(
 			JCas jcas, Class<SEGMENT_TYPE> segmentType, Class<BASE_TYPE> subType,
 			BiFunction<SEGMENT_TYPE, String, BOUNDARY_TYPE> btFunction) {
