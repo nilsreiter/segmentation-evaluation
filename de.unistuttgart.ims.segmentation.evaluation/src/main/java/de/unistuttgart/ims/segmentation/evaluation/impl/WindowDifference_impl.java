@@ -1,8 +1,9 @@
 package de.unistuttgart.ims.segmentation.evaluation.impl;
 
+import de.unistuttgart.ims.segmentation.evaluation.WindowMetric;
 import de.unistuttgart.ims.segmentation.evaluation.util.SegmentationUtil;
 
-public class WindowDifference_impl implements de.unistuttgart.ims.segmentation.evaluation.WindowDifference {
+public class WindowDifference_impl implements WindowMetric {
 
 	@Override
 	public double score(int[] gold, int[] silver) {

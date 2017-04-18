@@ -8,12 +8,12 @@ import org.apache.commons.collections4.Bag;
 
 import com.google.common.base.Function;
 
-import de.unistuttgart.ims.segmentation.evaluation.BoundarySimilarity;
+import de.unistuttgart.ims.segmentation.evaluation.WindowMetric;
 import de.unistuttgart.ims.segmentation.evaluation.impl.FournierUtil.Substitution;
 import de.unistuttgart.ims.segmentation.evaluation.impl.FournierUtil.Transposition;
 import de.unistuttgart.ims.segmentation.evaluation.util.SegmentationUtil;
 
-public class BoundarySimilarity_impl implements BoundarySimilarity {
+public class BoundarySimilarity implements WindowMetric {
 
 	protected Function<Transposition, Double> tpFunction = new Function<Transposition, Double>() {
 

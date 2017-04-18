@@ -4,9 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import de.unistuttgart.ims.segmentation.evaluation.impl.BoundarySimilarity;
+
 public class TestBoundarySimilarity {
 
-	BoundarySimilarity metric = MetricFactory.getMetric(BoundarySimilarity.class);
+	BoundarySimilarity metric = new BoundarySimilarity();
 
 	@Test
 	public void testFN() {

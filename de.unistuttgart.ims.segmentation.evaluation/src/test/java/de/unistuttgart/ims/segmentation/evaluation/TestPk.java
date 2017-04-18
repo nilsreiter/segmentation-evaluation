@@ -4,13 +4,15 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import de.unistuttgart.ims.segmentation.evaluation.impl.Pk_impl;
+
 public class TestPk {
 	static double range = 1e-4;
 
 	@Test
 	public void testPk() {
 		int[] a, b;
-		Pk pk = MetricFactory.getMetric(Pk.class);
+		Pk_impl pk = new Pk_impl();
 
 		a = new int[] { 4, 3, 1 };
 		b = new int[] { 4, 3, 1 };
@@ -45,7 +47,7 @@ public class TestPk {
 
 	@Test
 	public void testComputeWindowSize() {
-		Pk pk = MetricFactory.getMetric(Pk.class);
+		Pk_impl pk = new Pk_impl();
 		assertEquals(2, pk.computeWindowSize(new int[] { 2, 8, 2, 4, 2, 3 }));
 		assertEquals(2, pk.computeWindowSize(new int[] { 4, 4, 5 }));
 	}

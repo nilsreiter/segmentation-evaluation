@@ -4,13 +4,15 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import de.unistuttgart.ims.segmentation.evaluation.impl.WindowDifference_impl;
+
 public class TestWindowDifference {
 	static double range = 1e-4;
 
 	@Test
 	public void testWindowDifference() {
 		int[] a, b;
-		WindowDifference pk = MetricFactory.getMetric(WindowDifference.class);
+		WindowDifference_impl pk = new WindowDifference_impl();
 
 		a = new int[] { 4, 3, 1 };
 		b = new int[] { 4, 3, 1 };
@@ -47,7 +49,7 @@ public class TestWindowDifference {
 
 	@Test
 	public void testComputeWindowSize() {
-		Pk pk = MetricFactory.getMetric(Pk.class);
+		WindowDifference_impl pk = new WindowDifference_impl();
 		assertEquals(2, pk.computeWindowSize(new int[] { 2, 8, 2, 4, 2, 3 }));
 		assertEquals(2, pk.computeWindowSize(new int[] { 4, 4, 5 }));
 	}
