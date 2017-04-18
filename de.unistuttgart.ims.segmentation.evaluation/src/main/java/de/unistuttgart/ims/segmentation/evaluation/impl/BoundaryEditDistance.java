@@ -250,7 +250,6 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 
 	private void init() {
 		matches = new HashSet<Integer>();
-		List<Set<T>> deletions, additions, substitutions;
 		mismatches = new HashMap<Integer, Integer>();
 		transpositions = new HashSet<Transposition>();
 		tpIndex = new HashSetValuedHashMap<Integer, Transposition>();
