@@ -10,34 +10,35 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import de.unistuttgart.ims.segmentation.type.SegmentBoundary;
+import de.unistuttgart.ims.uimautil.TypeParameterUtil;
 
 public class ContinuousSegmentBoundaryAnnotator extends JCasAnnotator_ImplBase {
 
-	public static final String PARAM_ANNOTATION_TYPE = "Annotation Type";
+	public static final String PARAM_SEGMENT_TYPE = "Annotation Type";
+	public static final String PARAM_BOUNDARY_TYPE = "Boundary Type";
 
-	@ConfigurationParameter(name = PARAM_ANNOTATION_TYPE)
-	String annotationTypeName = "";
-	Class<? extends Annotation> annotationType;
+	@ConfigurationParameter(name = PARAM_SEGMENT_TYPE)
+	String segmentTypeName = "";
 
-	@SuppressWarnings("unchecked")
+	@ConfigurationParameter(name = PARAM_BOUNDARY_TYPE)
+	String boundaryTypeName = "";
+
+	Class<? extends Annotation> segmentType;
+	Class<? extends Annotation> boundaryType;
+
 	@Override
 	public void initialize(final UimaContext context) throws ResourceInitializationException {
 		super.initialize(context);
-		try {
-			final Class<?> clazz = Class.forName(annotationTypeName);
-			annotationType = (Class<? extends Annotation>) clazz;
-		} catch (final ClassNotFoundException e) {
-			throw new ResourceInitializationException(e);
-		}
+		segmentType = TypeParameterUtil.getClass(segmentTypeName);
+		boundaryType = TypeParameterUtil.getClass(boundaryTypeName);
 	}
 
 	@Override
 	public void process(JCas jcas) throws AnalysisEngineProcessException {
 
-		for (final Annotation anno : JCasUtil.select(jcas, annotationType)) {
+		for (final Annotation anno : JCasUtil.select(jcas, segmentType)) {
 			final int b = anno.getBegin();
-			AnnotationFactory.createAnnotation(jcas, b, b, SegmentBoundary.class);
+			AnnotationFactory.createAnnotation(jcas, b, b, boundaryType);
 		}
 	}
 
