@@ -36,7 +36,7 @@ public class TestBoundarySimilarity {
 
 		d = metric.score(ListBoundarySetsString.createBoundarySetsString(1, null, null, 2),
 				ListBoundarySetsString.createBoundarySetsString(1, 2, null, null), 2);
-		assertEquals(0.25, d, 1e-3);
+		assertEquals(0.33333, d, 1e-3);
 	}
 
 	@Test

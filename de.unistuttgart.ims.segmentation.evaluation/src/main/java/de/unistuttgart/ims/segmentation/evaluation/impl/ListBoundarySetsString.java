@@ -1,6 +1,7 @@
 package de.unistuttgart.ims.segmentation.evaluation.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
@@ -11,19 +12,40 @@ public class ListBoundarySetsString<T> extends ArrayList<Set<T>> implements Boun
 
 	private static final long serialVersionUID = 1L;
 
-	public ListBoundarySetsString(T... ts) {
+	public ListBoundarySetsString() {
+	}
+
+	public ListBoundarySetsString(Iterable<T> ts) {
+		super();
+		int i = 0;
+		for (T t : ts) {
+			if (t != null) {
+				Set<T> s = new HashSet<T>();
+				s.add(t);
+				add(i, s);
+			} else {
+				add(i, Sets.newHashSet());
+			}
+			i++;
+		}
+
+	}
+
+	public ListBoundarySetsString(@SuppressWarnings("unchecked") T... ts) {
 		super();
 		for (int i = 0; i < ts.length; i++) {
 			T o = ts[i];
 			if (o != null) {
-				add(i, Sets.newHashSet(o));
+				Set<T> s = new HashSet<T>();
+				s.add(o);
+				add(i, s);
 			} else {
 				add(i, Sets.newHashSet());
 			}
 		}
 	}
 
-	public ListBoundarySetsString(T[]... ts) {
+	public ListBoundarySetsString(@SuppressWarnings("unchecked") T[]... ts) {
 		for (int i = 0; i < ts.length; i++) {
 			T[] o = ts[i];
 			if (o != null) {
@@ -34,12 +56,12 @@ public class ListBoundarySetsString<T> extends ArrayList<Set<T>> implements Boun
 		}
 	}
 
-	public static <T> BoundarySetsString<T> createBoundarySetsString(T... ts) {
+	public static <T> BoundarySetsString<T> createBoundarySetsString(@SuppressWarnings("unchecked") T... ts) {
 		return new ListBoundarySetsString<T>(ts);
 
 	}
 
-	public static <T> BoundarySetsString<T> createBoundarySetsString(T[]... ts) {
+	public static <T> BoundarySetsString<T> createBoundarySetsString(@SuppressWarnings("unchecked") T[]... ts) {
 		return new ListBoundarySetsString<T>(ts);
 	}
 
