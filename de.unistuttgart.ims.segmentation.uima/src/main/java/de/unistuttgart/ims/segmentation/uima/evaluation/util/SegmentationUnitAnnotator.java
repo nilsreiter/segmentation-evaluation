@@ -12,6 +12,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import de.unistuttgart.ims.segmentation.type.SegmentationUnit;
 
+@Deprecated
 public class SegmentationUnitAnnotator extends JCasAnnotator_ImplBase {
 
 	public static final String PARAM_ANNOTATION_TYPE = "Annotation Type";
