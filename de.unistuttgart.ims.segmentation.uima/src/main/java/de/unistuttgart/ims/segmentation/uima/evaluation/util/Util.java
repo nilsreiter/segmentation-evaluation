@@ -25,6 +25,19 @@ public class Util {
 		};
 	}
 
+	/**
+	 * Returns a list of boundary sets, most of them empty.
+	 * 
+	 * @param jcas
+	 *            The JCas in which the annotations are found
+	 * @param segmentType
+	 *            The type of the segment annotation
+	 * @param subType
+	 *            The type that constitutes the document
+	 * @param btFunction
+	 *            A BiFunction to create boundary types
+	 * @return
+	 */
 	public static <BASE_TYPE extends Annotation, SEGMENT_TYPE extends Annotation, BOUNDARY_TYPE> List<Set<BOUNDARY_TYPE>> getBoundarySetSequence(
 			JCas jcas, Class<SEGMENT_TYPE> segmentType, Class<BASE_TYPE> subType,
 			BiFunction<SEGMENT_TYPE, String, BOUNDARY_TYPE> btFunction) {

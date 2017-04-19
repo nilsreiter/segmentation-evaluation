@@ -21,12 +21,7 @@ import de.unistuttgart.ims.segmentation.type.SegmentationSubUnit;
 public class TestUtil {
 
 	JCas jcas;
-	BiFunction<Segment, String, String> bif = new BiFunction<Segment, String, String>() {
-
-		public String apply(Segment segment, String arg0) {
-			return arg0;
-		}
-	};
+	BiFunction<Segment, String, String> bif = Util.getFunction();
 
 	@Before
 	public void setUp() throws UIMAException {
@@ -75,13 +70,15 @@ public class TestUtil {
 		AnnotationFactory.createAnnotation(jcas, 0, 1, Segment.class);
 		AnnotationFactory.createAnnotation(jcas, 6, 9, Segment.class);
 		List<Set<String>> l = Util.getBoundarySetSequence(jcas, Segment.class, SegmentationSubUnit.class, bif);
-		// System.out.println(l);
+		System.out.println(l);
 		assertFalse(l.get(0).isEmpty());
+		assertTrue(l.get(0).contains("Segment-END"));
 		assertTrue(l.get(1).isEmpty());
 		assertTrue(l.get(2).isEmpty());
 		assertTrue(l.get(3).isEmpty());
 		assertTrue(l.get(4).isEmpty());
 		assertFalse(l.get(5).isEmpty());
+		assertTrue(l.get(5).contains("Segment-BEGIN"));
 		assertTrue(l.get(6).isEmpty());
 	}
 }
