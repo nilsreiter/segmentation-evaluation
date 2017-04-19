@@ -55,7 +55,6 @@ public class TestBoundaryEditDistance {
 
 	}
 
-	@Test
 	public void testExp() {
 		BoundarySetsString<Integer> gold = ListBoundarySetsString.createBoundarySetsString(new Integer[] { 1 }, null,
 				new Integer[] { 0, 2 }, null, null);
@@ -68,10 +67,10 @@ public class TestBoundaryEditDistance {
 		// List<Set<Integer>> silver = Arrays.asList(Sets.newHashSet(1),
 		// Sets.newHashSet(), Sets.newHashSet(1, 5),
 		// Sets.newHashSet(), Sets.newHashSet());
-		System.err.println(gold);
-		System.err.println(silver);
+		// System.err.println(gold);
+		// System.err.println(silver);
 		bs.score(gold, silver, 2);
-		System.err.println(bs.toString());
+		// System.err.println(bs.toString());
 
 	}
 
