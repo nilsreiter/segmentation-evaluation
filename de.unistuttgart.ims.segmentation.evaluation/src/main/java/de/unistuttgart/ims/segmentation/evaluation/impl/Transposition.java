@@ -34,4 +34,5 @@ public class Transposition<T> {
 		b.append("(").append(from).append(",").append(to).append(",").append(type).append(')');
 		return b.toString();
 	}
+
 }

@@ -1,76 +1,74 @@
 package de.unistuttgart.ims.segmentation.evaluation.impl;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.Set;
+import java.util.function.BiFunction;
 
-import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.MultiValuedMap;
 
-import com.google.common.base.Function;
+import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsMetric;
 
-import de.unistuttgart.ims.segmentation.evaluation.WindowMetric;
-import de.unistuttgart.ims.segmentation.evaluation.impl.FournierUtil.Substitution;
-import de.unistuttgart.ims.segmentation.evaluation.impl.FournierUtil.Transposition;
-import de.unistuttgart.ims.segmentation.evaluation.util.SegmentationUtil;
+public class BoundarySimilarity<T> implements BoundarySetsMetric<T> {
 
-public class BoundarySimilarity implements WindowMetric {
-
-	protected Function<Transposition, Double> tpFunction = new Function<Transposition, Double>() {
+	BiFunction<T, T, Double> distanceFunction = new BiFunction<T, T, Double>() {
 
 		@Override
-		public Double apply(Transposition arg0) {
-			return new Double(arg0.getMass());
+		public Double apply(T t, T u) {
+			return (double) Math.abs(t.hashCode() - u.hashCode());
 		}
+
 	};
+	double maximalDistance = Integer.MAX_VALUE;
 
 	@Override
-	public double score(int[] gold, int[] silver, int windowSize) {
-		final boolean[][] b = SegmentationUtil.getBoundaries(gold, silver);
+	public double score(List<Set<T>> gold, List<Set<T>> silver, int window) {
+		BoundaryEditDistance<T> bed = new BoundaryEditDistance<T>();
+		bed.score(gold, silver, window);
 
-		// finding (number of) matches
-		int m = 0;
-		for (int i = 0; i < b[0].length; i++) {
-			m += ((b[0][i] == b[1][i]) && b[0][i] ? 1 : 0);
-		}
+		double num = bed.getNumberOfAdditions() + ws_ordinal(bed.getSubsitutions())
+				+ w_span(bed.getTranspositions(), window);
+		double den = bed.getNumberOfAdditions() + bed.getNumberOfSubstitutions() + bed.getNumberOfTranspositions()
+				+ bed.getNumberOfMatches();
 
-		// finding possible substitution operations
-		final List<Substitution> substOperations = FournierUtil.getPotentialSubstitions2(b);
-
-		// finding possible transposition operations
-		final Bag<Transposition> potTranspositions = FournierUtil.getTranspositions2(substOperations, windowSize);
-
-		for (final Transposition tp : potTranspositions) {
-			substOperations.removeIf(new Predicate<Substitution>() {
-
-				@Override
-				public boolean test(Substitution t) {
-					return ((tp.getTarget() == t.getPosition()) || (tp.getSource() == t.getPosition()));
-				}
-			});
-		}
-
-		final double num = substOperations.size() + getTranspositionsWeight(potTranspositions, windowSize);
-		final double denom = substOperations.size() + potTranspositions.size() + m;
-
-		return 1 - (num / denom);
+		return 1 - (num / den);
 	}
 
-	@Override
-	public double score(int[] gold, int[] silver) {
-		return score(gold, silver, 1);
-	}
-
-	protected double getTranspositionsWeight(Collection<Transposition> trans, int windowSize) {
-		double d = 0.0;
-		for (final Transposition tp : trans) {
-			d += tpFunction.apply(tp);
+	public double ws_ordinal(MultiValuedMap<Integer, Substitution<T>> s) {
+		double ws = 1.0;
+		double sum = 0.0;
+		for (Integer i : s.keySet()) {
+			for (Substitution<T> t : s.get(i)) {
+				double num = distanceFunction.apply(t.getFrom(), t.getTo());
+				double den = maximalDistance;
+				sum += (ws + (num / den));
+			}
 		}
-		return d / windowSize;
+		return sum;
 	}
 
-	@Override
-	public int computeWindowSize(int[] goldMass) {
-		return 1;
+	public double w_span(Set<Transposition<T>> tp, int window) {
+		double sum = 0.0;
+		double wt = 1.0;
+		for (Transposition<T> t : tp) {
+			sum += (wt + (Math.abs(t.from - t.to) / (double) window));
+		}
+		return sum;
+	}
+
+	public BiFunction<T, T, Double> getDistanceFunction() {
+		return distanceFunction;
+	}
+
+	public void setDistanceFunction(BiFunction<T, T, Double> distanceFunction) {
+		this.distanceFunction = distanceFunction;
+	}
+
+	public double getMaximalDistance() {
+		return maximalDistance;
+	}
+
+	public void setMaximalDistance(double maximalDistance) {
+		this.maximalDistance = maximalDistance;
 	}
 
 }
