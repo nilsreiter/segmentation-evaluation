@@ -26,10 +26,5 @@
 					<groupId>junit</groupId>
 					<artifactId>junit</artifactId>
 				</dependency>
-				<dependency>
-					<groupId>de.unistuttgart.ims</groupId>
-					<artifactId>commons</artifactId>
-					<version>0.1</version>
-				</dependency>
   </dependencies>
 </project>
