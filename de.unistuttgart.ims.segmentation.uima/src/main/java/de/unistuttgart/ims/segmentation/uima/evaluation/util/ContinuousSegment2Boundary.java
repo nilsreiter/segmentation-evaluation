@@ -12,7 +12,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import de.unistuttgart.ims.uimautil.TypeParameterUtil;
 
-public class ContinuousSegmentBoundaryAnnotator extends JCasAnnotator_ImplBase {
+public class ContinuousSegment2Boundary extends JCasAnnotator_ImplBase {
 
 	public static final String PARAM_SEGMENT_TYPE = "Annotation Type";
 	public static final String PARAM_BOUNDARY_TYPE = "Boundary Type";
@@ -35,11 +35,14 @@ public class ContinuousSegmentBoundaryAnnotator extends JCasAnnotator_ImplBase {
 
 	@Override
 	public void process(JCas jcas) throws AnalysisEngineProcessException {
-
-		for (final Annotation anno : JCasUtil.select(jcas, segmentType)) {
+		Annotation last = null;
+		for (Annotation anno : JCasUtil.select(jcas, segmentType)) {
 			final int b = anno.getBegin();
 			AnnotationFactory.createAnnotation(jcas, b, b, boundaryType);
+			last = anno;
 		}
+		if (last != null)
+			AnnotationFactory.createAnnotation(jcas, last.getEnd(), last.getEnd(), boundaryType);
 	}
 
 }
