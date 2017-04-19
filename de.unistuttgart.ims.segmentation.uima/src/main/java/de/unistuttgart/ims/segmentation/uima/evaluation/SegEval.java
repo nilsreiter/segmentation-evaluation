@@ -1,8 +1,6 @@
 package de.unistuttgart.ims.segmentation.uima.evaluation;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 import java.util.function.BiFunction;
 
 import org.apache.uima.fit.util.JCasUtil;
@@ -10,6 +8,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 
 import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsMetric;
+import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsString;
 import de.unistuttgart.ims.segmentation.evaluation.Metric;
 import de.unistuttgart.ims.segmentation.evaluation.WindowMetric;
 import de.unistuttgart.ims.segmentation.uima.evaluation.util.Util;
@@ -35,8 +34,8 @@ public class SegEval<SEGMENT_ANNOTATION extends Annotation, BASE_ANNOTATION exte
 		} else if (metric instanceof BoundarySetsMetric) {
 
 			BiFunction<SEGMENT_ANNOTATION, String, String> fnc = Util.getFunction();
-			List<Set<String>> goldBS = Util.getBoundarySetSequence(goldView, segmentClass, baseClass, fnc);
-			List<Set<String>> silverBS = Util.getBoundarySetSequence(silverView, segmentClass, baseClass, fnc);
+			BoundarySetsString<String> goldBS = Util.getBoundarySetSequence(goldView, segmentClass, baseClass, fnc);
+			BoundarySetsString<String> silverBS = Util.getBoundarySetSequence(silverView, segmentClass, baseClass, fnc);
 
 			return ((BoundarySetsMetric) metric).score(goldBS, silverBS, windowSize);
 

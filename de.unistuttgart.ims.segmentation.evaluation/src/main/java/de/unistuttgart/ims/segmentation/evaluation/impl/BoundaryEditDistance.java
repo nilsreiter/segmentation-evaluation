@@ -17,6 +17,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsMetric;
+import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsString;
 
 public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 	List<Set<T>> gold, silver;
@@ -189,13 +190,13 @@ public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
 		return this.getNumberOfAdditions() + this.getNumberOfSubstitutions() + this.getNumberOfTranspositions();
 	}
 
-	public static <T> int distance(List<Set<T>> a, List<Set<T>> b, int w) {
+	public static <T> int distance(BoundarySetsString<T> a, BoundarySetsString<T> b, int w) {
 		BoundaryEditDistance<T> bes = new BoundaryEditDistance<T>();
 		return (int) bes.score(a, b, w);
 	}
 
 	@Override
-	public double score(List<Set<T>> gold, List<Set<T>> silver, int windowSize) {
+	public double score(BoundarySetsString<T> gold, BoundarySetsString<T> silver, int windowSize) {
 		this.init();
 		this.gold = gold;
 		this.silver = silver;

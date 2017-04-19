@@ -1,12 +1,12 @@
 package de.unistuttgart.ims.segmentation.evaluation.impl;
 
-import java.util.List;
 import java.util.Set;
 import java.util.function.BiFunction;
 
 import org.apache.commons.collections4.MultiValuedMap;
 
 import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsMetric;
+import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsString;
 
 public class BoundarySimilarity<T> implements BoundarySetsMetric<T> {
 
@@ -21,7 +21,7 @@ public class BoundarySimilarity<T> implements BoundarySetsMetric<T> {
 	double maximalDistance = Integer.MAX_VALUE;
 
 	@Override
-	public double score(List<Set<T>> gold, List<Set<T>> silver, int window) {
+	public double score(BoundarySetsString<T> gold, BoundarySetsString<T> silver, int window) {
 		BoundaryEditDistance<T> bed = new BoundaryEditDistance<T>();
 		bed.score(gold, silver, window);
 

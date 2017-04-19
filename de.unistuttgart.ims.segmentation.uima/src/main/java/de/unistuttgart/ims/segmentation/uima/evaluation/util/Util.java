@@ -3,7 +3,6 @@ package de.unistuttgart.ims.segmentation.uima.evaluation.util;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.function.BiFunction;
 
 import org.apache.commons.collections4.MultiValuedMap;
@@ -11,6 +10,9 @@ import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
+
+import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsString;
+import de.unistuttgart.ims.segmentation.evaluation.impl.ListBoundarySetsString;
 
 public class Util {
 	public static final String BEGIN = "BEGIN";
@@ -38,7 +40,7 @@ public class Util {
 	 *            A BiFunction to create boundary types
 	 * @return
 	 */
-	public static <BASE_TYPE extends Annotation, SEGMENT_TYPE extends Annotation, BOUNDARY_TYPE> List<Set<BOUNDARY_TYPE>> getBoundarySetSequence(
+	public static <BASE_TYPE extends Annotation, SEGMENT_TYPE extends Annotation, BOUNDARY_TYPE> BoundarySetsString<BOUNDARY_TYPE> getBoundarySetSequence(
 			JCas jcas, Class<SEGMENT_TYPE> segmentType, Class<BASE_TYPE> subType,
 			BiFunction<SEGMENT_TYPE, String, BOUNDARY_TYPE> btFunction) {
 
@@ -70,7 +72,7 @@ public class Util {
 
 	}
 
-	static class ListSet<BOUNDARY_TYPE> extends ArrayList<Set<BOUNDARY_TYPE>> {
+	static class ListSet<BOUNDARY_TYPE> extends ListBoundarySetsString<BOUNDARY_TYPE> {
 
 		private static final long serialVersionUID = 1L;
 

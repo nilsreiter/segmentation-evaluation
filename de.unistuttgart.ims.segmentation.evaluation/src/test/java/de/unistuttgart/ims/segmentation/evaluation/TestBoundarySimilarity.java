@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.unistuttgart.ims.segmentation.evaluation.impl.BoundarySimilarity;
-import de.unistuttgart.ims.segmentation.evaluation.impl.FournierUtil;
+import de.unistuttgart.ims.segmentation.evaluation.impl.ListBoundarySetsString;
 
 public class TestBoundarySimilarity {
 
@@ -30,10 +30,12 @@ public class TestBoundarySimilarity {
 	@Test
 	public void testRegular() {
 		double d;
-		d = metric.score(FournierUtil.array2SetList(1, null, null, 2), FournierUtil.array2SetList(1, null, null, 2), 1);
+		d = metric.score(ListBoundarySetsString.createBoundarySetsString(1, null, null, 2),
+				ListBoundarySetsString.createBoundarySetsString(1, null, null, 2), 1);
 		assertEquals(1.0, d, 1e-3);
 
-		d = metric.score(FournierUtil.array2SetList(1, null, null, 2), FournierUtil.array2SetList(1, 2, null, null), 2);
+		d = metric.score(ListBoundarySetsString.createBoundarySetsString(1, null, null, 2),
+				ListBoundarySetsString.createBoundarySetsString(1, 2, null, null), 2);
 		assertEquals(0.25, d, 1e-3);
 	}
 
