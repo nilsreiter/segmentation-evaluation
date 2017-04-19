@@ -11,32 +11,41 @@ public class ListBoundarySetsString<T> extends ArrayList<Set<T>> implements Boun
 
 	private static final long serialVersionUID = 1L;
 
-	public static <T> BoundarySetsString<T> createBoundarySetsString(T... ts) {
-		ListBoundarySetsString<T> l = new ListBoundarySetsString<T>();
+	public ListBoundarySetsString(T... ts) {
+		super();
 		for (int i = 0; i < ts.length; i++) {
 			T o = ts[i];
 			if (o != null) {
-				l.add(i, Sets.newHashSet(o));
+				add(i, Sets.newHashSet(o));
 			} else {
-				l.add(i, Sets.newHashSet());
+				add(i, Sets.newHashSet());
 			}
 		}
-		return l;
+	}
+
+	public ListBoundarySetsString(T[]... ts) {
+		for (int i = 0; i < ts.length; i++) {
+			T[] o = ts[i];
+			if (o != null) {
+				add(i, Sets.newHashSet(o));
+			} else {
+				add(i, Sets.newHashSet());
+			}
+		}
+	}
+
+	public static <T> BoundarySetsString<T> createBoundarySetsString(T... ts) {
+		return new ListBoundarySetsString<T>(ts);
 
 	}
 
 	public static <T> BoundarySetsString<T> createBoundarySetsString(T[]... ts) {
-		ListBoundarySetsString<T> l = new ListBoundarySetsString<T>();
-		for (int i = 0; i < ts.length; i++) {
-			T[] o = ts[i];
-			if (o != null) {
-				l.add(i, Sets.newHashSet(o));
-			} else {
-				l.add(i, Sets.newHashSet());
-			}
-		}
-		return l;
+		return new ListBoundarySetsString<T>(ts);
+	}
 
+	@Override
+	public void add1(int index, T element) {
+		super.get(index).add(element);
 	}
 
 }
