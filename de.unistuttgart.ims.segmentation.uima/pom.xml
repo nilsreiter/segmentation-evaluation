@@ -9,17 +9,6 @@
 	<artifactId>de.unistuttgart.ims.segmentation.uima</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>de.unistuttgart.ims</groupId>
-			<artifactId>segmentation.evaluation</artifactId>
-			<version>0.2</version>
-		</dependency>
-		<dependency>
-			<groupId>de.unistuttgart.ims</groupId>
-			<artifactId>segmentation.api</artifactId>
-			<version>0.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.uima</groupId>
 			<artifactId>uimafit-core</artifactId>
 			<version>2.1.0</version>
@@ -32,6 +21,16 @@
 			<groupId>de.unistuttgart.ims</groupId>
 			<artifactId>uimautil</artifactId>
 			<version>0.7.1</version>
+		</dependency>
+		<dependency>
+			<groupId>de.unistuttgart.ims</groupId>
+			<artifactId>segmentation.api</artifactId>
+			<version>0.3-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.unistuttgart.ims</groupId>
+			<artifactId>segmentation.evaluation</artifactId>
+			<version>0.3-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
