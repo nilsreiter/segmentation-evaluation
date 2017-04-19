@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
-import java.util.Set;
 import java.util.function.BiFunction;
 
 import org.apache.uima.UIMAException;
@@ -15,6 +13,7 @@ import org.apache.uima.jcas.JCas;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsString;
 import de.unistuttgart.ims.segmentation.type.Segment;
 import de.unistuttgart.ims.segmentation.type.SegmentationSubUnit;
 
@@ -52,7 +51,7 @@ public class TestUtil {
 		AnnotationFactory.createAnnotation(jcas, 0, 3, Segment.class);
 		AnnotationFactory.createAnnotation(jcas, 5, 6, Segment.class);
 
-		List<Set<String>> l = Util.getBoundarySetSequence(jcas, Segment.class, SegmentationSubUnit.class, bif);
+		BoundarySetsString<String> l = Util.getBoundarySetSequence(jcas, Segment.class, SegmentationSubUnit.class, bif);
 		// System.out.println(l);
 		assertEquals(7, l.size());
 		assertTrue(l.get(0).isEmpty());
@@ -69,7 +68,7 @@ public class TestUtil {
 
 		AnnotationFactory.createAnnotation(jcas, 0, 1, Segment.class);
 		AnnotationFactory.createAnnotation(jcas, 6, 9, Segment.class);
-		List<Set<String>> l = Util.getBoundarySetSequence(jcas, Segment.class, SegmentationSubUnit.class, bif);
+		BoundarySetsString<String> l = Util.getBoundarySetSequence(jcas, Segment.class, SegmentationSubUnit.class, bif);
 		System.out.println(l);
 		assertFalse(l.get(0).isEmpty());
 		assertTrue(l.get(0).contains("Segment-END"));

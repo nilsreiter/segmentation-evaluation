@@ -1,8 +1,15 @@
 package de.unistuttgart.ims.segmentation.evaluation;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Set;
 
-public interface BoundarySetsString<T> extends List<Set<T>> {
+public interface BoundarySetsString<T> {
+	void add(int index, Set<T> element);
+
+	boolean addAll(int index, Collection<? extends Set<T>> element);
+
+	int size();
+
+	Set<T> get(int index);
 
 }

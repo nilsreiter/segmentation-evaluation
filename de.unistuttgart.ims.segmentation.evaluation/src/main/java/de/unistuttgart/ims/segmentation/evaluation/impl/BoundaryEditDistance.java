@@ -20,7 +20,7 @@ import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsMetric;
 import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsString;
 
 public class BoundaryEditDistance<T> implements BoundarySetsMetric<T> {
-	List<Set<T>> gold, silver;
+	BoundarySetsString<T> gold, silver;
 	int windowSize;
 
 	List<Set<T>> deletions, additions, substitutions;
