@@ -25,6 +25,7 @@ public class SegEval<SEGMENT_ANNOTATION extends Annotation, BASE_ANNOTATION exte
 		this.baseClass = baseClass;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public double score(JCas goldView, JCas silverView, int windowSize) {
 
 		if (metric instanceof WindowMetric) {
