@@ -7,12 +7,12 @@ import java.util.function.BiFunction;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.unistuttgart.ims.segmentation.evaluation.impl.BoundarySimilarity;
+import de.unistuttgart.ims.segmentation.evaluation.impl.BoundarySimilarityB;
 import de.unistuttgart.ims.segmentation.evaluation.impl.ListBoundarySetsString;
 
-public class TestBoundarySimilarity {
+public class TestBoundarySimilarityB {
 
-	BoundarySimilarity<Integer> metric = new BoundarySimilarity<Integer>();
+	BoundarySimilarityB<Integer> metric = new BoundarySimilarityB<Integer>();
 
 	@Before
 	public void setUp() {

@@ -8,7 +8,7 @@ import org.apache.commons.collections4.MultiValuedMap;
 import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsMetric;
 import de.unistuttgart.ims.segmentation.evaluation.BoundarySetsString;
 
-public class BoundarySimilarity<T> implements BoundarySetsMetric<T> {
+public class BoundarySimilarityB<T> implements BoundarySetsMetric<T> {
 
 	BiFunction<T, T, Double> distanceFunction = new BiFunction<T, T, Double>() {
 
