@@ -14,4 +14,6 @@ public interface BoundarySetsString<T> {
 
 	Set<T> get(int index);
 
+	int numberOfBoundaries();
+
 }

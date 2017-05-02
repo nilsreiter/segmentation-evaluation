@@ -70,4 +70,13 @@ public class ListBoundarySetsString<T> extends ArrayList<Set<T>> implements Boun
 		super.get(index).add(element);
 	}
 
+	@Override
+	public int numberOfBoundaries() {
+		int r = 0;
+		for (Set<T> s : this) {
+			r += s.size();
+		}
+		return r;
+	}
+
 }

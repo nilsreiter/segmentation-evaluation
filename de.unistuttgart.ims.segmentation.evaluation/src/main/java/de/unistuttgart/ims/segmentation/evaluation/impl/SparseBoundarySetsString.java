@@ -52,4 +52,13 @@ public class SparseBoundarySetsString<T> extends HashSetValuedHashMap<Integer, T
 		return super.get(index);
 	}
 
+	@Override
+	public int numberOfBoundaries() {
+		int r = 0;
+		for (Integer i : this.keySet()) {
+			r += this.get(i).size();
+		}
+		return r;
+	}
+
 }
